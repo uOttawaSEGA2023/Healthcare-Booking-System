@@ -1,4 +1,4 @@
-package com.example.hams;
+package com.example.project10;
 
 public class Doctor extends User {
     private int employeeNumber;
