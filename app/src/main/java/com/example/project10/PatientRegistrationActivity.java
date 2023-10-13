@@ -85,12 +85,12 @@ public class PatientRegistrationActivity extends AppCompatActivity {
                 }
 
                 if (!isValidPhone(phone)) {
-                    Toast.makeText(PatientRegistrationActivity.this, "Please enter a valid phone number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PatientRegistrationActivity.this, "Please enter a valid phone number (10 Digits)", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (!isValidCard(healthCard)) {
-                    Toast.makeText(PatientRegistrationActivity.this, "Please enter a valid health card", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PatientRegistrationActivity.this, "Please enter a valid health card (10 Digits)", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

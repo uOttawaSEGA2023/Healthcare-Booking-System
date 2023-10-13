@@ -42,24 +42,58 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
                 String phone = phoneNumber.getText().toString().trim();
                 String empNumber = employeeNumber.getText().toString().trim();
                 String spec = specialties.getText().toString().trim();
+                int fieldCount = 0;
+
+                if (first.isEmpty() || last.isEmpty() || email.isEmpty() || address.isEmpty() || password.isEmpty() || phone.isEmpty() || empNumber.isEmpty() || spec.isEmpty()) {
+                    if(first.isEmpty()){
+                        fieldCount++;
+                    }
+                    if(last.isEmpty()){
+                        fieldCount++;
+                    }
+                    if(email.isEmpty()) {
+                        fieldCount++;
+                    }
+                    if(address.isEmpty()){
+                        fieldCount++;
+                    }
+                    if(password.isEmpty()){
+                        fieldCount++;
+                    }
+                    if(phone.isEmpty()){
+                        fieldCount++;
+                    }
+                    if(empNumber.isEmpty()){
+                        fieldCount++;
+                    }
+                    if(spec.isEmpty()){
+                        fieldCount++;
+                    }
+                    Toast.makeText(DoctorRegistrationActivity.this, "Please fill in " + fieldCount + " missing field(s)", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!isValidName(first) || !isValidName(last)) {
+                    Toast.makeText(DoctorRegistrationActivity.this, "Names should only contain alphabets", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 if (!isValidEmail(email)) {
                     Toast.makeText(DoctorRegistrationActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                if(!isValidPassword(password)) {
+                    Toast.makeText(DoctorRegistrationActivity.this, "Please enter a valid password (6 or more characters", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (!isValidPhone(phone)) {
-                    Toast.makeText(DoctorRegistrationActivity.this, "Please enter a valid phone number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DoctorRegistrationActivity.this, "Please enter a valid phone number (10 Digits)", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                if (password.isEmpty() || first.isEmpty() || last.isEmpty() || address.isEmpty() || empNumber.isEmpty() || spec.isEmpty()) {
-                    Toast.makeText(DoctorRegistrationActivity.this, "Please fill in all the fields", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (!isValidName(first) || !isValidName(last)) {
-                    Toast.makeText(DoctorRegistrationActivity.this, "Names should only contain alphabets", Toast.LENGTH_SHORT).show();
+                if (!isValidEmployee(empNumber)) {
+                    Toast.makeText(DoctorRegistrationActivity.this, "Please enter a valid employee number (10 Digits)", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -74,6 +108,10 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
         });
     }
 
+    private boolean isValidName(String name) {
+        return name.matches("[a-zA-Z]+");
+    }
+
     public boolean isValidEmail(String email) {
         String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
@@ -81,12 +119,20 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
         return m.matches();
     }
 
-    private boolean isValidPhone(String phone) {
+    private boolean isValidPassword(String password) {
         // Assuming phone numbers have at least 10 digits, you can adjust this as per requirements
-        return phone.length() >= 10 && phone.matches("[0-9]+");
+        return password.length() >= 6;
     }
 
-    private boolean isValidName(String name) {
-        return name.matches("[a-zA-Z]+");
+    private boolean isValidPhone(String phone) {
+        // Assuming phone numbers have at least 10 digits, you can adjust this as per requirements
+        return phone.length() == 10 && phone.matches("[0-9]+");
     }
+
+    private boolean isValidEmployee(String empNumber) {
+        // Assuming phone numbers have at least 10 digits, you can adjust this as per requirements
+        return empNumber.length() == 10 && empNumber.matches("[0-9]+");
+    }
+
+    
 }
