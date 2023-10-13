@@ -1,26 +1,30 @@
 package com.example.project10;
 
-public class Doctor extends User {
-    private int employeeNumber;
-    private String[] specialties;
 
-    public Doctor(String firstName, String lastName, String email, String password, int phoneNumber, String address, int employeeNumber, String[] specialties) {
-        super(firstName, lastName, email, password, phoneNumber, address);
+// Doctor class derived from User
+public class Doctor extends User {
+    private String employeeNumber;
+    private String specialties;
+
+    public Doctor(String firstName, String lastName, String emailAddress, String password, String phoneNumber, String address, String employeeNumber, String specialties) {
+        super(firstName, lastName, emailAddress, password, phoneNumber, address);
         this.employeeNumber = employeeNumber;
         this.specialties = specialties;
     }
 
-    // Getters and Setters
-    public int getEmployeeNumber(){
+    public String getEmployeeNumber() {
         return employeeNumber;
     }
 
-    public void setEmployeeNumber(int newEmployeeNumber){
-        employeeNumber = newEmployeeNumber;
+    public void setEmployeeNumber(String employeeNumber) {
+        this.employeeNumber = employeeNumber;
     }
 
-    public String[] getSpecialties(){
+    public String getSpecialties() {
         return specialties;
     }
-    // ...
+
+    public void setSpecialties(String specialties) {
+        this.specialties = specialties;
+    }
 }

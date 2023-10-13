@@ -1,69 +1,70 @@
+// Base User class
 package com.example.project10;
 
-public class User {
-    protected String firstName;
-    protected String lastName;
-    protected String email;
-    protected String password;
-    protected int phoneNumber;
-    protected String address;
+public abstract class User {
+    private String firstName;
+    private String lastName;
+    private String emailAddress;
+    private String password;
+    private String phoneNumber;
+    private String address;
 
-    public User(String firstName, String lastName, String email, String password, int phoneNumber, String address) {
+    public User(String firstName, String lastName, String emailAddress, String password, String phoneNumber, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.emailAddress = emailAddress;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.address = address;
     }
 
-    // Getters and Setters
-    public String getFirstName(){
+    // Getters and Setters for User class
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String newFirstName){
-        firstName = newFirstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastName(){
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String newLastName){
-        lastName = newLastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getEmail(){
-        return email;
-    }
-    public void setEmail(String newEmail){
-        email = newEmail;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public String getPassword(){
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(String newPassword){
-        password = newPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public int getPhoneNumber(){
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int newPhoneNumber){
-        phoneNumber = newPhoneNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getAddress(){
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(String newAddress){
-        address = newAddress;
+    public void setAddress(String address) {
+        this.address = address;
     }
-
-    // ...
 }
+

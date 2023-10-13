@@ -1,21 +1,18 @@
 package com.example.project10;
 
-
 public class Patient extends User {
-    private int healthCardNumber;
+    private String healthCardNumber;
 
-    public Patient(String firstName, String lastName, String email, String password, int phoneNumber, String address, int healthCardNumber) {
-        super(firstName, lastName, email, password, phoneNumber, address);
+    public Patient(String firstName, String lastName, String emailAddress, String password, String phoneNumber, String address, String healthCardNumber) {
+        super(firstName, lastName, emailAddress, password, phoneNumber, address);
         this.healthCardNumber = healthCardNumber;
     }
 
-    // Getters and Setters
-    public int getHealthCardNumber(){
+    public String getHealthCardNumber() {
         return healthCardNumber;
     }
 
-    public void setHealthCardNumber(int newNumber){
-        healthCardNumber = newNumber;
+    public void setHealthCardNumber(String healthCardNumber) {
+        this.healthCardNumber = healthCardNumber;
     }
-    // ...
 }
