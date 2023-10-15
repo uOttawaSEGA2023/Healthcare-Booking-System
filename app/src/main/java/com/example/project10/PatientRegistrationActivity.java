@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class PatientRegistrationActivity extends AppCompatActivity {
 
     private EditText firstNameInput, lastName, emailAddress, homeAddress, userPassword, phoneNumber, healthCardNumber;
-    private Button submitButton;
+    private Button submitButton, backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,7 @@ public class PatientRegistrationActivity extends AppCompatActivity {
         phoneNumber = findViewById(R.id.phoneNumber);
         healthCardNumber = findViewById(R.id.healthCardNumber);
         submitButton = findViewById(R.id.submitButton);
+        backButton = findViewById(R.id.backButton);
 
         // Set onClick listener for submit button
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +53,16 @@ public class PatientRegistrationActivity extends AppCompatActivity {
                 }
             }
         });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate back to RoleActivity
+                Intent roleIntent = new Intent(PatientRegistrationActivity.this, RoleActivity.class);
+                startActivity(roleIntent);
+            }
+        });
+
     }
 
     private boolean validateFields(String first, String last, String email, String address, String password, String phone, String healthCard) {

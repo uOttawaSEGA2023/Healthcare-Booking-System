@@ -8,8 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class RoleActivity extends AppCompatActivity {
 
-    private Button registerAsPatientButton;
-    private Button registerAsDoctorButton;
+    private Button registerAsPatientButton, registerAsDoctorButton, backButton1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +18,7 @@ public class RoleActivity extends AppCompatActivity {
         // Initialize UI components
         registerAsPatientButton = findViewById(R.id.registerAsPatient);
         registerAsDoctorButton = findViewById(R.id.registerAsDoctor);
+        backButton1 = findViewById(R.id.backButton1);
 
         // Set onClick listeners
         registerAsPatientButton.setOnClickListener(new View.OnClickListener() {
@@ -34,6 +34,14 @@ public class RoleActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent doctorRegistrationIntent = new Intent(RoleActivity.this, DoctorRegistrationActivity.class);
                 startActivity(doctorRegistrationIntent);
+            }
+        });
+
+        backButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mainIntent = new Intent(RoleActivity.this, MainActivity.class);
+                startActivity(mainIntent);
             }
         });
     }

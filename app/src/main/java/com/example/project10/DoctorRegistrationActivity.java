@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class DoctorRegistrationActivity extends AppCompatActivity {
 
     private EditText firstNameInput, lastName, emailAddress, homeAddress, userPassword, phoneNumber, employeeNumber, specialtiesInput;
-    private Button submitButton;
+    private Button submitButton2, backButton2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +28,11 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
         phoneNumber = findViewById(R.id.phoneNumber);
         employeeNumber = findViewById(R.id.employeeNumber);
         specialtiesInput = findViewById(R.id.Specialties); // Renamed for clarity
-        submitButton = findViewById(R.id.submitButton);
+        submitButton2 = findViewById(R.id.submitButton2);
+        backButton2 = findViewById(R.id.backButton2);
 
         // Set onClick listener for submit button
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        submitButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String first = firstNameInput.getText().toString().trim();
@@ -55,6 +56,14 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
                 // Navigate back to MainActivity after registration
                 Intent mainIntent = new Intent(DoctorRegistrationActivity.this, MainActivity.class);
                 startActivity(mainIntent);
+            }
+        });
+        backButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate back to RoleActivity
+                Intent roleIntent = new Intent(DoctorRegistrationActivity.this, RoleActivity.class);
+                startActivity(roleIntent);
             }
         });
     }
