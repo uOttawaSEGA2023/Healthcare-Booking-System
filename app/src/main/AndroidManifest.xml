@@ -24,7 +24,7 @@
         <activity android:name=".RoleActivity" />
         <activity android:name=".PatientRegistrationActivity" />
         <activity android:name=".DoctorRegistrationActivity" />
-        <activity android:name=".DoctorWelcomeActivity" />
+        <activity android:name=".WelcomeActivity" />
     </application>
 
 </manifest>

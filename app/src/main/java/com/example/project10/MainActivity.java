@@ -35,6 +35,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(roleIntent);
             }
         });
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
+                startActivity(welcomeIntent);
+            }
+        });
     }
 
 }
