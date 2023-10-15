@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class DoctorRegistrationActivity extends AppCompatActivity {
 
-    private EditText firstNameInput, lastName, emailAddress, homeAddress, userPassword, phoneNumber, employeeNumber, specialties;
+    private EditText firstNameInput, lastName, emailAddress, homeAddress, userPassword, phoneNumber, employeeNumber, specialtiesInput;
     private Button submitButton;
 
     @Override
@@ -27,7 +27,7 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
         userPassword = findViewById(R.id.userPassword);
         phoneNumber = findViewById(R.id.phoneNumber);
         employeeNumber = findViewById(R.id.employeeNumber);
-        specialties = findViewById(R.id.Specialties);
+        specialtiesInput = findViewById(R.id.Specialties); // Renamed for clarity
         submitButton = findViewById(R.id.submitButton);
 
         // Set onClick listener for submit button
@@ -41,63 +41,14 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
                 String password = userPassword.getText().toString().trim();
                 String phone = phoneNumber.getText().toString().trim();
                 String empNumber = employeeNumber.getText().toString().trim();
-                String spec = specialties.getText().toString().trim();
-                int fieldCount = 0;
+                String docSpecialties = specialtiesInput.getText().toString().trim();
 
-                if (first.isEmpty() || last.isEmpty() || email.isEmpty() || address.isEmpty() || password.isEmpty() || phone.isEmpty() || empNumber.isEmpty() || spec.isEmpty()) {
-                    if(first.isEmpty()){
-                        fieldCount++;
-                    }
-                    if(last.isEmpty()){
-                        fieldCount++;
-                    }
-                    if(email.isEmpty()) {
-                        fieldCount++;
-                    }
-                    if(address.isEmpty()){
-                        fieldCount++;
-                    }
-                    if(password.isEmpty()){
-                        fieldCount++;
-                    }
-                    if(phone.isEmpty()){
-                        fieldCount++;
-                    }
-                    if(empNumber.isEmpty()){
-                        fieldCount++;
-                    }
-                    if(spec.isEmpty()){
-                        fieldCount++;
-                    }
-                    Toast.makeText(DoctorRegistrationActivity.this, "Please fill in " + fieldCount + " missing field(s)", Toast.LENGTH_SHORT).show();
+                // Validate all fields
+                if (!validateFields(first, last, email, address, password, phone, empNumber, docSpecialties)) {
                     return;
                 }
 
-                if (!isValidName(first) || !isValidName(last)) {
-                    Toast.makeText(DoctorRegistrationActivity.this, "Names should only contain alphabets", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (!isValidEmail(email)) {
-                    Toast.makeText(DoctorRegistrationActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if(!isValidPassword(password)) {
-                    Toast.makeText(DoctorRegistrationActivity.this, "Please enter a valid password (6 or more characters", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (!isValidPhone(phone)) {
-                    Toast.makeText(DoctorRegistrationActivity.this, "Please enter a valid phone number (10 Digits)", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!isValidEmployee(empNumber)) {
-                    Toast.makeText(DoctorRegistrationActivity.this, "Please enter a valid employee number (10 Digits)", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                Doctor newDoctor = new Doctor(first, last, email, password, phone, address, empNumber, spec);
+                Doctor newDoctor = new Doctor(first, last, email, password, phone, address, empNumber, docSpecialties);
 
                 // TODO: Store the newDoctor object in the database or any storage system.
 
@@ -108,31 +59,83 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
         });
     }
 
+    private boolean validateFields(String first, String last, String email, String address, String password, String phone, String empNumber, String docSpecialties) {
+        int fieldCount = 0;
+
+        if (first.isEmpty()) fieldCount++;
+        if (last.isEmpty()) fieldCount++;
+        if (email.isEmpty()) fieldCount++;
+        if (address.isEmpty()) fieldCount++;
+        if (password.isEmpty()) fieldCount++;
+        if (phone.isEmpty()) fieldCount++;
+        if (empNumber.isEmpty()) fieldCount++;
+        if (docSpecialties.isEmpty()) fieldCount++;
+
+        if (fieldCount > 0) {
+            Toast.makeText(DoctorRegistrationActivity.this, "Please fill in " + fieldCount + " missing field(s)", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+
+        if (!isValidName(first) || !isValidName(last)) {
+            Toast.makeText(DoctorRegistrationActivity.this, "Names should only contain alphabets", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!isValidEmail(email)) {
+            Toast.makeText(DoctorRegistrationActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!isValidPassword(password)) {
+            Toast.makeText(DoctorRegistrationActivity.this, "Please enter a valid password (6 or more characters)", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!isValidPhone(phone)) {
+            Toast.makeText(DoctorRegistrationActivity.this, "Please enter a valid phone number (10 Digits)", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!isValidEmployee(empNumber)) {
+            Toast.makeText(DoctorRegistrationActivity.this, "Please enter a valid employee number (10 Digits)", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!isValidAddress(address)) {
+            Toast.makeText(DoctorRegistrationActivity.this, "Please enter a valid address", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
     private boolean isValidName(String name) {
-        return name.matches("[a-zA-Z]+");
+        return name.matches("[a-zA-Z ]+");
     }
 
     public boolean isValidEmail(String email) {
-        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
-        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
-        java.util.regex.Matcher m = p.matcher(email);
-        return m.matches();
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private boolean isValidPassword(String password) {
-        // Assuming phone numbers have at least 10 digits, you can adjust this as per requirements
         return password.length() >= 6;
     }
 
     private boolean isValidPhone(String phone) {
-        // Assuming phone numbers have at least 10 digits, you can adjust this as per requirements
         return phone.length() == 10 && phone.matches("[0-9]+");
     }
 
     private boolean isValidEmployee(String empNumber) {
-        // Assuming phone numbers have at least 10 digits, you can adjust this as per requirements
         return empNumber.length() == 10 && empNumber.matches("[0-9]+");
     }
 
-    
+    private boolean isValidAddress(String address) {
+        if (address.length() < 5 || address.length() > 100) {
+            return false;
+        }
+        String addressPattern = "^[a-zA-Z0-9 ,.-]+$";
+        return address.matches(addressPattern);
+    }
 }
+

@@ -40,97 +40,96 @@ public class PatientRegistrationActivity extends AppCompatActivity {
                 String password = userPassword.getText().toString().trim();
                 String phone = phoneNumber.getText().toString().trim();
                 String healthCard = healthCardNumber.getText().toString().trim();
-                int fieldCount = 0;
 
+                if (validateFields(first, last, email, address, password, phone, healthCard)) {
+                    Patient newPatient = new Patient(first, last, email, password, phone, address, healthCard);
 
+                    // TODO: Store the newPatient object in the database or any storage system.
 
-                if (first.isEmpty() || last.isEmpty() || email.isEmpty() || address.isEmpty() || password.isEmpty() || phone.isEmpty() || healthCard.isEmpty()) {
-                    if(first.isEmpty()){
-                        fieldCount++;
-                    }
-                    if(last.isEmpty()){
-                        fieldCount++;
-                    }
-                    if(email.isEmpty()) {
-                        fieldCount++;
-                    }
-                    if(address.isEmpty()){
-                        fieldCount++;
-                    }
-                    if(password.isEmpty()){
-                        fieldCount++;
-                    }
-                    if(phone.isEmpty()){
-                        fieldCount++;
-                    }
-                    if(healthCard.isEmpty()){
-                        fieldCount++;
-                    }
-                    Toast.makeText(PatientRegistrationActivity.this, "Please fill in " + fieldCount + " missing field(s)", Toast.LENGTH_SHORT).show();
-                    return;
+                    // Navigate back to MainActivity after registration
+                    Intent mainIntent = new Intent(PatientRegistrationActivity.this, MainActivity.class);
+                    startActivity(mainIntent);
                 }
-                if (!isValidName(first) || !isValidName(last)) {
-                    Toast.makeText(PatientRegistrationActivity.this, "Names should only contain alphabets", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (!isValidEmail(email)) {
-                    Toast.makeText(PatientRegistrationActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if(!isValidPassword(password)) {
-                    Toast.makeText(PatientRegistrationActivity.this, "Please enter a valid password (6 or more characters", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (!isValidPhone(phone)) {
-                    Toast.makeText(PatientRegistrationActivity.this, "Please enter a valid phone number (10 Digits)", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (!isValidCard(healthCard)) {
-                    Toast.makeText(PatientRegistrationActivity.this, "Please enter a valid health card (10 Digits)", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-
-                Patient newPatient = new Patient(first, last, email, password, phone, address, healthCard);
-
-                // TODO: Store the newPatient object in the database or any storage system.
-
-                // Navigate back to MainActivity after registration
-                Intent mainIntent = new Intent(PatientRegistrationActivity.this, MainActivity.class);
-                startActivity(mainIntent);
             }
         });
+    }
+
+    private boolean validateFields(String first, String last, String email, String address, String password, String phone, String healthCard) {
+        int fieldCount = 0;
+
+        if (first.isEmpty()) fieldCount++;
+        if (last.isEmpty()) fieldCount++;
+        if (email.isEmpty()) fieldCount++;
+        if (address.isEmpty()) fieldCount++;
+        if (password.isEmpty()) fieldCount++;
+        if (phone.isEmpty()) fieldCount++;
+        if (healthCard.isEmpty()) fieldCount++;
+
+        if (fieldCount > 0) {
+            Toast.makeText(PatientRegistrationActivity.this, "Please fill in " + fieldCount + " missing field(s)", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!isValidName(first) || !isValidName(last)) {
+            Toast.makeText(PatientRegistrationActivity.this, "Names should only contain alphabets", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!isValidEmail(email)) {
+            Toast.makeText(PatientRegistrationActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!isValidPassword(password)) {
+            Toast.makeText(PatientRegistrationActivity.this, "Please enter a valid password (6 or more characters)", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!isValidPhone(phone)) {
+            Toast.makeText(PatientRegistrationActivity.this, "Please enter a valid phone number (10 Digits)", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!isValidCard(healthCard)) {
+            Toast.makeText(PatientRegistrationActivity.this, "Please enter a valid health card (10 Digits)", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!isValidAddress(address)) {
+            Toast.makeText(PatientRegistrationActivity.this, "Please enter a valid address", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 
     private boolean isValidName(String name) {
         return name.matches("[a-zA-Z]+");
     }
+
     public boolean isValidEmail(String email) {
-        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
-        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
-        java.util.regex.Matcher m = p.matcher(email);
-        return m.matches();
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private boolean isValidPassword(String password) {
-        // Assuming password has 6 or more characters, you can adjust this as per requirements
         return password.length() >= 6;
     }
+
     private boolean isValidPhone(String phone) {
-        // Assuming phone numbers have at least 10 digits, you can adjust this as per requirements
         return phone.length() == 10 && phone.matches("[0-9]+");
     }
 
     private boolean isValidCard(String healthCard) {
-        // Assuming phone numbers have at least 10 digits, you can adjust this as per requirements
         return healthCard.length() == 10 && healthCard.matches("[0-9]+");
     }
 
-
-
+    private boolean isValidAddress(String address) {
+        if (address.length() < 5 || address.length() > 100) {
+            return false;
+        }
+        String addressPattern = "^[a-zA-Z0-9 ,.-]+$";
+        return address.matches(addressPattern);
+    }
 }
+
 
