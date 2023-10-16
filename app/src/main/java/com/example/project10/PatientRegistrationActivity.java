@@ -7,17 +7,38 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class PatientRegistrationActivity extends AppCompatActivity {
 
     private EditText firstNameInput, lastName, emailAddress, homeAddress, userPassword, phoneNumber, healthCardNumber;
     private Button submitButton, backButton;
+    FirebaseAuth mAuth;
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Intent welcomeIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
+            startActivity(welcomeIntent);
+            finish();
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_registration);
+        mAuth = FirebaseAuth.getInstance();
 
         // Initialize UI components
         firstNameInput = findViewById(R.id.firstNameInput);
@@ -29,6 +50,7 @@ public class PatientRegistrationActivity extends AppCompatActivity {
         healthCardNumber = findViewById(R.id.healthCardNumber);
         submitButton = findViewById(R.id.submitButton);
         backButton = findViewById(R.id.backButton);
+
 
         // Set onClick listener for submit button
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -45,11 +67,25 @@ public class PatientRegistrationActivity extends AppCompatActivity {
                 if (validateFields(first, last, email, address, password, phone, healthCard)) {
                     Patient newPatient = new Patient(first, last, email, password, phone, address, healthCard);
 
-                    // TODO: Store the newPatient object in the database or any storage system.
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(PatientRegistrationActivity.this, "Account created.",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Toast.makeText(PatientRegistrationActivity.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
 
-                    // Navigate back to MainActivity after registration
-                    Intent mainIntent = new Intent(PatientRegistrationActivity.this, MainActivity.class);
-                    startActivity(mainIntent);
+                // Navigate back to MainActivity after registration
+                Intent mainIntent = new Intent(PatientRegistrationActivity.this, MainActivity.class);
+                startActivity(mainIntent);
+
                 }
             }
         });

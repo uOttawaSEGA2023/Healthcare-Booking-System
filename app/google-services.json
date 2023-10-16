@@ -1,14 +1,13 @@
 {
   "project_info": {
-    "project_number": "190906184865",
-    "firebase_url": "https://hams-a1a9a-default-rtdb.firebaseio.com",
-    "project_id": "hams-a1a9a",
-    "storage_bucket": "hams-a1a9a.appspot.com"
+    "project_number": "716970386229",
+    "project_id": "hams-8603a",
+    "storage_bucket": "hams-8603a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:190906184865:android:e4b55c7150ccf4bc80ece0",
+        "mobilesdk_app_id": "1:716970386229:android:f9e78d8b7e836e8a0fe27c",
         "android_client_info": {
           "package_name": "com.example.project10"
         }
@@ -16,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDvm9bTE37Yf2npvCpJT6APxBWEAXigIBQ"
+          "current_key": "AIzaSyDo2f4I5ICdca8gL_e667Rn4k0_z0d7vwo"
         }
       ],
       "services": {

@@ -7,18 +7,38 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class DoctorRegistrationActivity extends AppCompatActivity {
 
     private EditText firstNameInput, lastName, emailAddress, homeAddress, userPassword, phoneNumber, employeeNumber, specialtiesInput;
     private Button submitButton2, backButton2;
+    FirebaseAuth mAuth;
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Intent welcomeIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
+            startActivity(welcomeIntent);
+            finish();
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_registration);
-
+        mAuth = FirebaseAuth.getInstance();
         // Initialize UI components
         firstNameInput = findViewById(R.id.firstNameInput);
         lastName = findViewById(R.id.lastName);
@@ -51,7 +71,20 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
 
                 Doctor newDoctor = new Doctor(first, last, email, password, phone, address, empNumber, docSpecialties);
 
-                // TODO: Store the newDoctor object in the database or any storage system.
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(DoctorRegistrationActivity.this, "Account created.",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Toast.makeText(DoctorRegistrationActivity.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
 
                 // Navigate back to MainActivity after registration
                 Intent mainIntent = new Intent(DoctorRegistrationActivity.this, MainActivity.class);
@@ -146,5 +179,6 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
         String addressPattern = "^[a-zA-Z0-9 ,.-]+$";
         return address.matches(addressPattern);
     }
+
 }
 
