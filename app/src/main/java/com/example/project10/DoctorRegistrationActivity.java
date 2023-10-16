@@ -148,7 +148,10 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
             Toast.makeText(DoctorRegistrationActivity.this, "Please enter a valid address", Toast.LENGTH_SHORT).show();
             return false;
         }
-
+        if (!isValidSpecialty(address)) {
+            Toast.makeText(DoctorRegistrationActivity.this, "Please enter 1 or more valid specialties", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
     }
 
@@ -179,6 +182,13 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
         String addressPattern = "^[a-zA-Z0-9 ,.-]+$";
         return address.matches(addressPattern);
     }
+    private boolean isValidSpecialty(String docSpecialties) {
+        if (docSpecialties.length() < 1) {
+            return false;
+        }
+        return docSpecialties.matches("^[a-zA-Z,]+( [a-zA-Z,]+)*$");
+    }
+
 
 }
 
