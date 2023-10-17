@@ -1,7 +1,6 @@
+//Doctor class derived from User
 package com.example.project10;
 
-
-// Doctor class derived from User
 public class Doctor extends User {
     private String employeeNumber;
     private String specialties;
