@@ -26,6 +26,7 @@
         <activity android:name=".PatientRegistrationActivity" />
         <activity android:name=".DoctorRegistrationActivity" />
         <activity android:name=".WelcomeActivity" />
+        <activity android:name=".AdminWelcomeActivity" />
     </application>
 
 </manifest>
