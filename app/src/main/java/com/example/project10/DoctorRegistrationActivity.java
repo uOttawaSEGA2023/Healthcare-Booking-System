@@ -30,7 +30,6 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
             Intent welcomeIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
             startActivity(welcomeIntent);
             finish();
-
         }
     }
 
