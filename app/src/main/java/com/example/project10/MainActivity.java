@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private Button registerButton;
     FirebaseAuth mAuth;
 
+
     @Override
     public void onStart() {
         super.onStart();
@@ -48,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.register);
 
 
-
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,32 +59,31 @@ public class MainActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email, password;
-                email = String.valueOf(emailEditText.getText());
-                password = String.valueOf(passwordEditText.getText());
+                final String email = String.valueOf(emailEditText.getText());
+                final String password = String.valueOf(passwordEditText.getText());
 
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    // sign in successful, update UI with the signed-in user's information
-                                    Toast.makeText(MainActivity.this, "Login Successful.",
-                                            Toast.LENGTH_SHORT).show();
-                                    Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
-                                    startActivity(welcomeIntent);
-                                    finish();
+                                    if ("admin@gmail.com".equals(email) && "admin123".equals(password)) {
+                                        // For admin credentials
+                                        Intent adminIntent = new Intent(MainActivity.this, AdminWelcomeActivity.class);
+                                        startActivity(adminIntent);
+                                        finish();
+                                    } else {
+                                        // For other users
+                                        Toast.makeText(MainActivity.this, "Login Successful.", Toast.LENGTH_SHORT).show();
+                                        Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
+                                        startActivity(welcomeIntent);
+                                        finish();
+                                    }
                                 } else {
-                                    Toast.makeText(MainActivity.this, "Login Unsucessful.",
-                                            Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, "Login Unsuccessful.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-
-
-
             }
         });
-    }
-
-}
+    }}

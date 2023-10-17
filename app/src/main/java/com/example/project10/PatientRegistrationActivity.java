@@ -146,7 +146,6 @@ public class PatientRegistrationActivity extends AppCompatActivity {
             Toast.makeText(PatientRegistrationActivity.this, "Please enter a valid address", Toast.LENGTH_SHORT).show();
             return false;
         }
-
         return true;
     }
 
