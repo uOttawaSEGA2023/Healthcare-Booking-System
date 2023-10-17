@@ -59,8 +59,13 @@ public class MainActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String email = String.valueOf(emailEditText.getText());
-                final String password = String.valueOf(passwordEditText.getText());
+                if(String.valueOf(emailEditText.getText()).equals("") ||String.valueOf(passwordEditText.getText()).equals("")){
+                    Toast.makeText(MainActivity.this, "Login Unsuccessful.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String email = String.valueOf(emailEditText.getText());
+                String password = String.valueOf(passwordEditText.getText());
 
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -83,7 +88,9 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(MainActivity.this, "Login Unsuccessful.", Toast.LENGTH_SHORT).show();
                                 }
                             }
+
                         });
+
             }
         });
     }}
