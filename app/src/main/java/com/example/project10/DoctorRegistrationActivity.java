@@ -147,7 +147,7 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
             Toast.makeText(DoctorRegistrationActivity.this, "Please enter a valid address", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (!isValidSpecialty(address)) {
+        if (!isValidSpecialty(docSpecialties)) {
             Toast.makeText(DoctorRegistrationActivity.this, "Please enter 1 or more valid specialties", Toast.LENGTH_SHORT).show();
             return false;
         }

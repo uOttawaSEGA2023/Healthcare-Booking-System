@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "716970386229",
-    "project_id": "hams-8603a",
-    "storage_bucket": "hams-8603a.appspot.com"
+    "project_number": "257796793261",
+    "project_id": "hams-5fd11",
+    "storage_bucket": "hams-5fd11.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:716970386229:android:f9e78d8b7e836e8a0fe27c",
+        "mobilesdk_app_id": "1:257796793261:android:7f070f2328932d44c33724",
         "android_client_info": {
           "package_name": "com.example.project10"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDo2f4I5ICdca8gL_e667Rn4k0_z0d7vwo"
+          "current_key": "AIzaSyCMoWeEN_TfVTrtKfw0kOnmsUiviuWQtxc"
         }
       ],
       "services": {
