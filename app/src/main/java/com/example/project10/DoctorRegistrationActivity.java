@@ -1,5 +1,8 @@
 package com.example.project10;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -16,16 +19,21 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentReference;
 
 public class DoctorRegistrationActivity extends AppCompatActivity {
 
     private EditText firstNameInput, lastName, emailAddress, homeAddress, userPassword, phoneNumber, employeeNumber, specialtiesInput;
     private Button submitButton2, backButton2;
     FirebaseAuth mAuth;
+    FirebaseFirestore fstore;
+
     @Override
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        fstore= FirebaseFirestore.getInstance();
         if(currentUser != null){
             Intent welcomeIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
             startActivity(welcomeIntent);
@@ -50,7 +58,7 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
         submitButton2 = findViewById(R.id.submitButton2);
         backButton2 = findViewById(R.id.backButton2);
 
-        // Set onClick listener for submit button
+// Set onClick listener for submit button
         submitButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,28 +76,45 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
                     return;
                 }
 
-                Doctor newDoctor = new Doctor(first, last, email, password, phone, address, empNumber, docSpecialties);
-
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(DoctorRegistrationActivity.this, "Account created.",
-                                            Toast.LENGTH_SHORT).show();
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    String userID = user != null ? user.getUid() : "";
+
+                                    DocumentReference documentReference = fstore.collection("doctors").document(userID);
+                                    Map<String, Object> doctor = new HashMap<>();
+                                    doctor.put("firstName", first);
+                                    doctor.put("lastName", last);
+                                    doctor.put("email", email);
+                                    doctor.put("address", address);
+                                    doctor.put("phone", phone);
+                                    doctor.put("employeeNumber", empNumber);
+                                    doctor.put("specialties", docSpecialties);
+
+                                    documentReference.set(doctor).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(DoctorRegistrationActivity.this, "Account created and data saved.", Toast.LENGTH_SHORT).show();
+                                                Intent mainIntent = new Intent(DoctorRegistrationActivity.this, MainActivity.class);
+                                                startActivity(mainIntent);
+                                                finish();
+                                            } else {
+                                                Toast.makeText(DoctorRegistrationActivity.this, "Error in saving doctor data", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
                                 } else {
-                                    // If sign in fails, display a message to the user.
-                                    Toast.makeText(DoctorRegistrationActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(DoctorRegistrationActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-
-                // Navigate back to MainActivity after registration
-                Intent mainIntent = new Intent(DoctorRegistrationActivity.this, MainActivity.class);
-                startActivity(mainIntent);
             }
         });
+
         backButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
