@@ -34,11 +34,7 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         fstore= FirebaseFirestore.getInstance();
-        if(currentUser != null){
-            Intent welcomeIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
-            startActivity(welcomeIntent);
-            finish();
-        }
+
     }
 
     @Override
@@ -84,8 +80,9 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     String userID = user != null ? user.getUid() : "";
 
-                                    DocumentReference documentReference = fstore.collection("doctors").document(userID);
+                                    DocumentReference documentReference = fstore.collection("users").document(userID);
                                     Map<String, Object> doctor = new HashMap<>();
+                                    doctor.put("role", "doctor");
                                     doctor.put("firstName", first);
                                     doctor.put("lastName", last);
                                     doctor.put("email", email);
@@ -99,7 +96,7 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 Toast.makeText(DoctorRegistrationActivity.this, "Account created and data saved.", Toast.LENGTH_SHORT).show();
-                                                Intent mainIntent = new Intent(DoctorRegistrationActivity.this, MainActivity.class);
+                                                Intent mainIntent = new Intent(DoctorRegistrationActivity.this, DoctorWelcomeActivity.class);
                                                 startActivity(mainIntent);
                                                 finish();
                                             } else {

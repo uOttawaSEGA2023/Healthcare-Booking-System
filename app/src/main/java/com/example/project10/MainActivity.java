@@ -11,10 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentSnapshot;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,18 +27,14 @@ public class MainActivity extends AppCompatActivity {
     private Button signInButton;
     private Button registerButton;
     FirebaseAuth mAuth;
+    FirebaseFirestore fstore;
 
 
     @Override
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
-            startActivity(welcomeIntent);
-            finish();
 
-        }
     }
 
     @Override
@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
+        fstore = FirebaseFirestore.getInstance();
+
         // Initialize UI components
         emailEditText = findViewById(R.id.emailSignIn);
         passwordEditText = findViewById(R.id.passwordSignIn);
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(String.valueOf(emailEditText.getText()).equals("") ||String.valueOf(passwordEditText.getText()).equals("")){
-                    Toast.makeText(MainActivity.this, "Login Unsuccessful.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Please enter both email and password.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -72,25 +74,38 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    if ("admin@gmail.com".equals(email) && "admin123".equals(password)) {
-                                        // For admin credentials
-                                        Intent adminIntent = new Intent(MainActivity.this, AdminWelcomeActivity.class);
-                                        startActivity(adminIntent);
-                                        finish();
-                                    } else {
-                                        // For other users
-                                        Toast.makeText(MainActivity.this, "Login Successful.", Toast.LENGTH_SHORT).show();
-                                        Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
-                                        startActivity(welcomeIntent);
-                                        finish();
+                                    FirebaseUser currentUser = mAuth.getCurrentUser();
+                                    if (currentUser != null) {
+                                        String userId = currentUser.getUid();
+                                        fstore.collection("users").document(userId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                String role = documentSnapshot.getString("role");
+                                                Intent intent;
+                                                if ("admin@gmail.com".equals(email) && "admin123".equals(password)) {
+                                                    intent = new Intent(MainActivity.this, AdminWelcomeActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                } else if ("doctor".equals(role)) {
+                                                    intent = new Intent(MainActivity.this, DoctorWelcomeActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                } else if ("patient".equals(role)) {
+                                                    intent = new Intent(MainActivity.this, PatientWelcomeActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                } else {
+                                                    // Role is not admin, doctor, or patient
+                                                    Toast.makeText(MainActivity.this, "Invalid role or credentials. Please try again.", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
                                     }
                                 } else {
                                     Toast.makeText(MainActivity.this, "Login Unsuccessful.", Toast.LENGTH_SHORT).show();
                                 }
                             }
-
                         });
-
             }
         });
+
     }}

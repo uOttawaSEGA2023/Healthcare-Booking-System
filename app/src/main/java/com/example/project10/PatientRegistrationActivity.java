@@ -34,12 +34,7 @@ public class PatientRegistrationActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         fstore= FirebaseFirestore.getInstance();
-        if(currentUser != null){
-            Intent welcomeIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
-            startActivity(welcomeIntent);
-            finish();
 
-        }
     }
 
     @Override
@@ -47,6 +42,7 @@ public class PatientRegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_registration);
         mAuth = FirebaseAuth.getInstance();
+        fstore = FirebaseFirestore.getInstance();
 
         // Initialize UI components
         firstNameInput = findViewById(R.id.firstNameInput);
@@ -81,8 +77,9 @@ public class PatientRegistrationActivity extends AppCompatActivity {
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         String userID = user != null ? user.getUid() : "";
 
-                                        DocumentReference documentReference = fstore.collection("patients").document(userID);
+                                        DocumentReference documentReference = fstore.collection("users").document(userID);
                                         Map<String, Object> patient = new HashMap<>();
+                                        patient.put("role", "patient");
                                         patient.put("firstName", first);
                                         patient.put("lastName", last);
                                         patient.put("email", email);
