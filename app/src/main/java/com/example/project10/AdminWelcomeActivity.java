@@ -10,6 +10,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class AdminWelcomeActivity extends AppCompatActivity {
     private Button logOutButton;
+    private Button registationRequestsButton;
+
     FirebaseAuth mAuth;
 
     @Override
@@ -18,8 +20,9 @@ public class AdminWelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_welcome_screen);
         mAuth = FirebaseAuth.getInstance();
 
-        logOutButton = findViewById(R.id.logOut);
 
+        logOutButton = findViewById(R.id.logOut);
+        registationRequestsButton = findViewById(R.id.registrationRequests);
         logOutButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -29,6 +32,14 @@ public class AdminWelcomeActivity extends AppCompatActivity {
 
             }
         });
+        registationRequestsButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent mainIntent = new Intent(AdminWelcomeActivity.this, AdminRegistrationRequests.class);
+                startActivity(mainIntent);
 
+            }
+        });
     }
 }

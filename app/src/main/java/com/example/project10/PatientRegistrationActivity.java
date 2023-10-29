@@ -77,7 +77,11 @@ public class PatientRegistrationActivity extends AppCompatActivity {
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         String userID = user != null ? user.getUid() : "";
 
-                                        DocumentReference documentReference = fstore.collection("users").document(userID);
+                                        // Document references for both collections
+                                        DocumentReference userDocRef = fstore.collection("users").document(userID);
+                                        DocumentReference statusDocRef = fstore.collection("non processed IDs").document(userID);
+
+                                        // User information
                                         Map<String, Object> patient = new HashMap<>();
                                         patient.put("role", "patient");
                                         patient.put("firstName", first);
@@ -87,14 +91,29 @@ public class PatientRegistrationActivity extends AppCompatActivity {
                                         patient.put("phone", phone);
                                         patient.put("healthCardNumber", healthCard);
 
-                                        documentReference.set(patient).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        // Status information
+                                        Map<String, Object> status = new HashMap<>();
+                                        status.put("status", "pending");
+
+                                        // Add user info to "users" collection
+                                        userDocRef.set(patient).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
-                                                    Toast.makeText(PatientRegistrationActivity.this, "Account created successfully", Toast.LENGTH_SHORT).show();
-                                                    Intent intent = new Intent(PatientRegistrationActivity.this, PatientWelcomeActivity.class);
-                                                    startActivity(intent);
-                                                    finish();
+                                                    // Add status to "non processed IDs" collection
+                                                    statusDocRef.set(status).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                Toast.makeText(PatientRegistrationActivity.this, "Account created successfully", Toast.LENGTH_SHORT).show();
+                                                                Intent intent = new Intent(PatientRegistrationActivity.this, PatientWelcomeActivity.class);
+                                                                startActivity(intent);
+                                                                finish();
+                                                            } else {
+                                                                Toast.makeText(PatientRegistrationActivity.this, "Error in saving status", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    });
                                                 } else {
                                                     Toast.makeText(PatientRegistrationActivity.this, "Error in saving user data", Toast.LENGTH_SHORT).show();
                                                 }
@@ -108,6 +127,7 @@ public class PatientRegistrationActivity extends AppCompatActivity {
                 }
             }
         });
+
 
 
         backButton.setOnClickListener(new View.OnClickListener() {
