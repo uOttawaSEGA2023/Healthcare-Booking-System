@@ -30,6 +30,8 @@ public class AdminRegistrationRequests extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<String> userDetailsList;
 
+    private Button backButton;
+
     private UserAdapter adapter;
     private FirebaseFirestore pendingFirestore;
 
@@ -62,5 +64,16 @@ public class AdminRegistrationRequests extends AppCompatActivity {
                 recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
             }
         });
+
+        backButton = findViewById(R.id.backRequestButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminRegistrationRequests.this, AdminWelcomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 }
