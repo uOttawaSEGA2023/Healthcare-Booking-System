@@ -26,7 +26,6 @@ public class AdminWelcomeActivity extends AppCompatActivity {
         logOutButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
                 Intent mainIntent = new Intent(AdminWelcomeActivity.this, MainActivity.class);
                 startActivity(mainIntent);
                 finish();

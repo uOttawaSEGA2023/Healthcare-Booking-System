@@ -71,6 +71,7 @@ public class AdminRegistrationRequests extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(AdminRegistrationRequests.this, AdminWelcomeActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
