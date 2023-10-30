@@ -29,13 +29,13 @@ public class AdminWelcomeActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 Intent mainIntent = new Intent(AdminWelcomeActivity.this, MainActivity.class);
                 startActivity(mainIntent);
+                finish();
 
             }
         });
         registationRequestsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
                 Intent mainIntent = new Intent(AdminWelcomeActivity.this, AdminRegistrationRequests.class);
                 startActivity(mainIntent);
 

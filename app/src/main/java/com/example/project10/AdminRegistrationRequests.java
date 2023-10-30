@@ -1,12 +1,17 @@
 package com.example.project10;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,7 +28,9 @@ public class AdminRegistrationRequests extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private List<String> userDetailsList;
     private FirebaseFirestore pendingFirestore;
+    private Button exitRequestsButton;
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +50,17 @@ public class AdminRegistrationRequests extends AppCompatActivity {
                 adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, userDetailsList);
                 adapter.notifyDataSetChanged();
                 listView.setAdapter(adapter);
+            }
+        });
+
+        exitRequestsButton = findViewById(R.id.exitRequestsButton);
+        exitRequestsButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent mainIntent = new Intent(AdminRegistrationRequests.this, AdminWelcomeActivity.class);
+                startActivity(mainIntent);
+                finish();
+
             }
         });
 
