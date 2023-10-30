@@ -32,7 +32,6 @@ public class AdminRegistrationRequests extends AppCompatActivity {
 
     private UserAdapter adapter;
     private FirebaseFirestore pendingFirestore;
-    private Button exitRequestsButton;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -43,6 +42,7 @@ public class AdminRegistrationRequests extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         userDetailsList = new ArrayList<>();
         pendingFirestore = FirebaseFirestore.getInstance();
+
         pendingFirestore.collection("pending users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException error) {

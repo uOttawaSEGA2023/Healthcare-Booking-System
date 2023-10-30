@@ -198,6 +198,14 @@
       <option name="presentableId" value="Default" />
       <updated>1697503335678</updated>
     </task>
+    <task id="LOCAL-00001" summary="added admin requests xml">
+      <created>1698630948156</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1698630948156</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -213,5 +221,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="added admin requests xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="added admin requests xml" />
   </component>
 </project>
