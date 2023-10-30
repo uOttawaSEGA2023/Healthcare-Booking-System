@@ -10,6 +10,9 @@ import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -24,9 +27,10 @@ import java.util.List;
 
 public class AdminRegistrationRequests extends AppCompatActivity {
 
-    private ListView listView;
-    private ArrayAdapter<String> adapter;
-    private List<String> userDetailsList;
+    private RecyclerView recyclerView;
+    private ArrayList<String> userDetailsList;
+
+    private UserAdapter adapter;
     private FirebaseFirestore pendingFirestore;
     private Button exitRequestsButton;
 
@@ -35,35 +39,28 @@ public class AdminRegistrationRequests extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_registration_requests);
-        listView = (ListView) findViewById(R.id.listView);
+        recyclerView = (RecyclerView) findViewById(R.id.userList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         userDetailsList = new ArrayList<>();
         pendingFirestore = FirebaseFirestore.getInstance();
         pendingFirestore.collection("pending users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException error) {
                 userDetailsList.clear();
+                adapter = new UserAdapter(getApplicationContext(), userDetailsList);
                 for(DocumentSnapshot snapshot : documentSnapshots){
                     if(snapshot.exists()) {
-                        userDetailsList.add(snapshot.getString("firstName"));
+                        String firstName = snapshot.getString("firstName");
+                        String lastName = snapshot.getString("lastName");
+                        String role = snapshot.getString("role");
+                        String details = firstName + " " + lastName + ", " + role;
+                        userDetailsList.add(details);
                     }
                 }
-                adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, userDetailsList);
                 adapter.notifyDataSetChanged();
-                listView.setAdapter(adapter);
+                recyclerView.setAdapter(adapter);
+                recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
             }
         });
-
-        exitRequestsButton = findViewById(R.id.exitRequestsButton);
-        exitRequestsButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent mainIntent = new Intent(AdminRegistrationRequests.this, AdminWelcomeActivity.class);
-                startActivity(mainIntent);
-                finish();
-
-            }
-        });
-
-
     }
 }
