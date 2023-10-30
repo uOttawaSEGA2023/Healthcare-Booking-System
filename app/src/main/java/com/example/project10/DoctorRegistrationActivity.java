@@ -27,13 +27,13 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
     private EditText firstNameInput, lastName, emailAddress, homeAddress, userPassword, phoneNumber, employeeNumber, specialtiesInput;
     private Button submitButton2, backButton2;
     FirebaseAuth mAuth;
-    FirebaseFirestore fstore;
+    FirebaseFirestore pendingFirestore;
 
     @Override
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        fstore= FirebaseFirestore.getInstance();
+        pendingFirestore = FirebaseFirestore.getInstance();
 
     }
 
@@ -80,7 +80,7 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     String userID = user != null ? user.getUid() : "";
 
-                                    DocumentReference documentReference = fstore.collection("users").document(userID);
+                                    DocumentReference userDocRef = pendingFirestore.collection("pending users").document(userID);
                                     Map<String, Object> doctor = new HashMap<>();
                                     doctor.put("role", "doctor");
                                     doctor.put("firstName", first);
@@ -91,12 +91,12 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
                                     doctor.put("employeeNumber", empNumber);
                                     doctor.put("specialties", docSpecialties);
 
-                                    documentReference.set(doctor).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    userDocRef.set(doctor).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 Toast.makeText(DoctorRegistrationActivity.this, "Account created and data saved.", Toast.LENGTH_SHORT).show();
-                                                Intent mainIntent = new Intent(DoctorRegistrationActivity.this, DoctorWelcomeActivity.class);
+                                                Intent mainIntent = new Intent(DoctorRegistrationActivity.this, MainActivity.class);
                                                 startActivity(mainIntent);
                                                 finish();
                                             } else {

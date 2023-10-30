@@ -27,13 +27,13 @@ public class PatientRegistrationActivity extends AppCompatActivity {
     private EditText firstNameInput, lastName, emailAddress, homeAddress, userPassword, phoneNumber, healthCardNumber;
     private Button submitButton, backButton;
     FirebaseAuth mAuth;
-    FirebaseFirestore fstore;
+    FirebaseFirestore pendingFirestore;
 
     @Override
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        fstore= FirebaseFirestore.getInstance();
+        pendingFirestore = FirebaseFirestore.getInstance();
 
     }
 
@@ -42,7 +42,7 @@ public class PatientRegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_registration);
         mAuth = FirebaseAuth.getInstance();
-        fstore = FirebaseFirestore.getInstance();
+        pendingFirestore = FirebaseFirestore.getInstance();
 
         // Initialize UI components
         firstNameInput = findViewById(R.id.firstNameInput);
@@ -78,8 +78,7 @@ public class PatientRegistrationActivity extends AppCompatActivity {
                                         String userID = user != null ? user.getUid() : "";
 
                                         // Document references for both collections
-                                        DocumentReference userDocRef = fstore.collection("users").document(userID);
-                                        DocumentReference statusDocRef = fstore.collection("non processed IDs").document(userID);
+                                        DocumentReference userDocRef = pendingFirestore.collection("pending users").document(userID);
 
                                         // User information
                                         Map<String, Object> patient = new HashMap<>();
@@ -91,29 +90,14 @@ public class PatientRegistrationActivity extends AppCompatActivity {
                                         patient.put("phone", phone);
                                         patient.put("healthCardNumber", healthCard);
 
-                                        // Status information
-                                        Map<String, Object> status = new HashMap<>();
-                                        status.put("status", "pending");
-
                                         // Add user info to "users" collection
                                         userDocRef.set(patient).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
-                                                    // Add status to "non processed IDs" collection
-                                                    statusDocRef.set(status).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-                                                            if (task.isSuccessful()) {
-                                                                Toast.makeText(PatientRegistrationActivity.this, "Account created successfully", Toast.LENGTH_SHORT).show();
-                                                                Intent intent = new Intent(PatientRegistrationActivity.this, PatientWelcomeActivity.class);
-                                                                startActivity(intent);
-                                                                finish();
-                                                            } else {
-                                                                Toast.makeText(PatientRegistrationActivity.this, "Error in saving status", Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        }
-                                                    });
+                                                    Toast.makeText(PatientRegistrationActivity.this, "Account created successfully", Toast.LENGTH_SHORT).show();
+                                                    Intent intent = new Intent(PatientRegistrationActivity.this, MainActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
                                                 } else {
                                                     Toast.makeText(PatientRegistrationActivity.this, "Error in saving user data", Toast.LENGTH_SHORT).show();
                                                 }
