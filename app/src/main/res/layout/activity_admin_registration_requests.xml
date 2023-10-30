@@ -9,7 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="45dp"></ListView>
+        android:layout_marginTop="45dp">
+    </ListView>
+
+    <ImageButton
+        android:id="@+id/exitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="351dp"
+        app:srcCompat="?attr/actionModeCloseDrawable" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -18,20 +27,18 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
-    <ImageButton
-        android:id="@+id/exitRequestsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="351dp"
-        app:srcCompat="?attr/actionModeCloseDrawable" />
 
-    <EditText
+
+    <TextView
         android:id="@+id/editTextText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="84dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="95dp"
+        android:layout_marginEnd="78dp"
+        android:layout_marginBottom="694dp"
         android:ems="10"
         android:gravity="center"
         android:inputType="text"

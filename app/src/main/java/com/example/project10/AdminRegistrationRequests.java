@@ -28,7 +28,6 @@ public class AdminRegistrationRequests extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private List<String> userDetailsList;
     private FirebaseFirestore pendingFirestore;
-    private Button exitRequestsButton;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -38,6 +37,7 @@ public class AdminRegistrationRequests extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
         userDetailsList = new ArrayList<>();
         pendingFirestore = FirebaseFirestore.getInstance();
+
         pendingFirestore.collection("pending users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException error) {
@@ -53,16 +53,8 @@ public class AdminRegistrationRequests extends AppCompatActivity {
             }
         });
 
-        exitRequestsButton = findViewById(R.id.exitRequestsButton);
-        exitRequestsButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent mainIntent = new Intent(AdminRegistrationRequests.this, AdminWelcomeActivity.class);
-                startActivity(mainIntent);
-                finish();
 
-            }
-        });
+
 
 
     }
