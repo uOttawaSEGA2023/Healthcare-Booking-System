@@ -57,7 +57,11 @@ public class PatientWelcomeActivity extends AppCompatActivity {
     private void checkUserInCollection(String userId, String collection, String status) {
         fstore.collection(collection).document(userId).get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
-                patientStatus.setText("Status: " + status);
+                if(status.equals("Rejected")){
+                    patientStatus.setText("Status: " + status + ", Email admin@gmail.com");
+                }else{
+                    patientStatus.setText("Status: " + status);
+                }
             }
         });
     }

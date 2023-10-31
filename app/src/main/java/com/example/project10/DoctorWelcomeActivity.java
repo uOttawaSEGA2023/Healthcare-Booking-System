@@ -60,7 +60,11 @@ public class DoctorWelcomeActivity extends AppCompatActivity {
         fstore.collection(collection).document(userId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
-                    doctorStatus.setText("Status: " + status);
+                    if(status.equals("Rejected")){
+                        doctorStatus.setText("Status: " + status + "\nEmail admin@gmail.com");
+                    }else{
+                        doctorStatus.setText("Status: " + status);
+                    }
                 }
             }
         });
