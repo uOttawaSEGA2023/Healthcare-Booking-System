@@ -21,7 +21,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/welcomePatient"
+        android:id="@+id/doctorStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status: Unknown"
+        app:layout_constraintTop_toBottomOf="@id/welcomeDoctor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+
+    <TextView
+        android:id="@+id/welcomeDoctor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="184dp"
@@ -32,7 +43,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/patientLogOut"
+        android:id="@+id/doctorLogOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -52,7 +63,7 @@
         android:layout_width="55dp"
         android:layout_height="55dp"
         app:layout_constraintBottom_toTopOf="@+id/headerTitle2"
-        app:layout_constraintEnd_toStartOf="@+id/patientLogOut"
+        app:layout_constraintEnd_toStartOf="@+id/doctorLogOut"
         app:layout_constraintHorizontal_bias="0.063"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -77,10 +77,7 @@ public class PatientRegistrationActivity extends AppCompatActivity {
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         String userID = user != null ? user.getUid() : "";
 
-                                        // Document references for both collections
-                                        DocumentReference userDocRef = pendingFirestore.collection("pending users").document(userID);
-
-                                        // User information
+                                        // Prepare the patient data
                                         Map<String, Object> patient = new HashMap<>();
                                         patient.put("role", "patient");
                                         patient.put("firstName", first);
@@ -90,24 +87,36 @@ public class PatientRegistrationActivity extends AppCompatActivity {
                                         patient.put("phone", phone);
                                         patient.put("healthCardNumber", healthCard);
 
-                                        // Add user info to "users" collection
-                                        userDocRef.set(patient).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Toast.makeText(PatientRegistrationActivity.this, "Account created successfully", Toast.LENGTH_SHORT).show();
-                                                    Intent intent = new Intent(PatientRegistrationActivity.this, MainActivity.class);
-                                                    startActivity(intent);
-                                                    finish();
-                                                } else {
-                                                    Toast.makeText(PatientRegistrationActivity.this, "Error in saving user data", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
+                                        DocumentReference userPatientRefPending = pendingFirestore.collection("pending users").document(userID);
+                                        DocumentReference userPatientRefUsers = pendingFirestore.collection("users").document(userID);
+
+                                        userPatientRefPending.set(patient)
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            userPatientRefUsers.set(patient)
+                                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                            if (task.isSuccessful()) {
+                                                                                Toast.makeText(PatientRegistrationActivity.this, "Account created!", Toast.LENGTH_SHORT).show();
+                                                                                Intent mainIntent = new Intent(PatientRegistrationActivity.this, MainActivity.class);
+                                                                                startActivity(mainIntent);
+                                                                                finish();
+                                                                            }
+                                                                        }
+                                                                    });
+                                                        } else {
+                                                            Toast.makeText(PatientRegistrationActivity.this, "Error in saving user data", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
                                     } else {
                                         Toast.makeText(PatientRegistrationActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
+
+
                 }
             }
         });

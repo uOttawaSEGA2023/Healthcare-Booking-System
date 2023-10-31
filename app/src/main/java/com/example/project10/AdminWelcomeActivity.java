@@ -12,6 +12,8 @@ public class AdminWelcomeActivity extends AppCompatActivity {
     private Button logOutButton;
     private Button registationRequestsButton;
 
+    private Button rejectedUsersButton;
+
     FirebaseAuth mAuth;
 
     @Override
@@ -23,6 +25,7 @@ public class AdminWelcomeActivity extends AppCompatActivity {
 
         logOutButton = findViewById(R.id.logOut);
         registationRequestsButton = findViewById(R.id.registrationRequests);
+
         logOutButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

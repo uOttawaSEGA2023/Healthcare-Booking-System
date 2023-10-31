@@ -80,7 +80,7 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     String userID = user != null ? user.getUid() : "";
 
-                                    DocumentReference userDocRef = pendingFirestore.collection("pending users").document(userID);
+                                    // Prepare the doctor data
                                     Map<String, Object> doctor = new HashMap<>();
                                     doctor.put("role", "doctor");
                                     doctor.put("firstName", first);
@@ -91,24 +91,35 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
                                     doctor.put("employeeNumber", empNumber);
                                     doctor.put("specialties", docSpecialties);
 
-                                    userDocRef.set(doctor).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Toast.makeText(DoctorRegistrationActivity.this, "Account created and data saved.", Toast.LENGTH_SHORT).show();
-                                                Intent mainIntent = new Intent(DoctorRegistrationActivity.this, MainActivity.class);
-                                                startActivity(mainIntent);
-                                                finish();
-                                            } else {
-                                                Toast.makeText(DoctorRegistrationActivity.this, "Error in saving doctor data", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
+                                    DocumentReference userDocRefPending = pendingFirestore.collection("pending users").document(userID);
+                                    DocumentReference userDocRefUsers = pendingFirestore.collection("users").document(userID);
+
+                                    userDocRefPending.set(doctor)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        userDocRefUsers.set(doctor)
+                                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                                        if (task.isSuccessful()) {
+                                                                            Toast.makeText(DoctorRegistrationActivity.this, "Account created!", Toast.LENGTH_SHORT).show();
+                                                                            Intent mainIntent = new Intent(DoctorRegistrationActivity.this, MainActivity.class);
+                                                                            startActivity(mainIntent);
+                                                                            finish();
+                                                                        }
+                                                                    }
+                                                                });
+                                                    }
+                                                }
+                                            });
                                 } else {
                                     Toast.makeText(DoctorRegistrationActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
+
             }
         });
 
