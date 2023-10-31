@@ -29,7 +29,8 @@
         <activity android:name=".AdminWelcomeActivity" />
         <activity android:name=".PatientWelcomeActivity" />
         <activity android:name=".DoctorWelcomeActivity" />
-        <activity android:name=".AdminRegistrationRequests" />
+        <activity android:name=".AdminRegistrationRequestsActivity" />
+        <activity android:name=".AdminDeniedRequestsActivity" />
 
     </application>
 

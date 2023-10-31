@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent roleIntent = new Intent(MainActivity.this, RoleActivity.class);
                 startActivity(roleIntent);
+                finish();
             }
         });
         signInButton.setOnClickListener(new View.OnClickListener() {

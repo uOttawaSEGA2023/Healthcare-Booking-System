@@ -129,6 +129,7 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
                 // Navigate back to RoleActivity
                 Intent roleIntent = new Intent(DoctorRegistrationActivity.this, RoleActivity.class);
                 startActivity(roleIntent);
+                finish();
             }
         });
     }

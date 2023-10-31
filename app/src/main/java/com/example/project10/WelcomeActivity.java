@@ -26,7 +26,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 Intent mainIntent = new Intent(WelcomeActivity.this, MainActivity.class);
                 startActivity(mainIntent);
-
+                finish();
             }
         });
 

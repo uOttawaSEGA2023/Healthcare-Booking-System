@@ -26,6 +26,7 @@ public class RoleActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent patientRegistrationIntent = new Intent(RoleActivity.this, PatientRegistrationActivity.class);
                 startActivity(patientRegistrationIntent);
+                finish();
             }
         });
 
@@ -34,6 +35,7 @@ public class RoleActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent doctorRegistrationIntent = new Intent(RoleActivity.this, DoctorRegistrationActivity.class);
                 startActivity(doctorRegistrationIntent);
+                finish();
             }
         });
 
@@ -42,6 +44,7 @@ public class RoleActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent mainIntent = new Intent(RoleActivity.this, MainActivity.class);
                 startActivity(mainIntent);
+                finish();
             }
         });
     }

@@ -12,8 +12,6 @@ public class AdminWelcomeActivity extends AppCompatActivity {
     private Button logOutButton;
     private Button registationRequestsButton;
 
-    private Button rejectedUsersButton;
-
     FirebaseAuth mAuth;
 
     @Override
@@ -38,9 +36,9 @@ public class AdminWelcomeActivity extends AppCompatActivity {
         registationRequestsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent mainIntent = new Intent(AdminWelcomeActivity.this, AdminRegistrationRequests.class);
+                Intent mainIntent = new Intent(AdminWelcomeActivity.this, AdminRegistrationRequestsActivity.class);
                 startActivity(mainIntent);
-
+                finish();
             }
         });
     }

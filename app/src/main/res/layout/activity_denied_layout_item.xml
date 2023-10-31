@@ -14,99 +14,88 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/textPhone"
+            android:id="@+id/textPhone1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="TextView"
             android:textColor="#333333"
             android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/acceptButton"
+            app:layout_constraintEnd_toStartOf="@+id/acceptButton1"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textEmail" />
+            app:layout_constraintTop_toBottomOf="@+id/textEmail1" />
 
         <TextView
-            android:id="@+id/textSpec"
+            android:id="@+id/textSpec1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="TextView"
             android:textColor="#333333"
             android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/acceptButton"
+            app:layout_constraintEnd_toStartOf="@+id/acceptButton1"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textPhone" />
+            app:layout_constraintTop_toBottomOf="@+id/textPhone1" />
 
         <TextView
-            android:id="@+id/textEmail"
+            android:id="@+id/textEmail1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="TextView"
             android:textColor="#333333"
             android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/acceptButton"
+            app:layout_constraintEnd_toStartOf="@+id/acceptButton1"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textEHNumber" />
+            app:layout_constraintTop_toBottomOf="@+id/textEHNumber1" />
 
         <TextView
-            android:id="@+id/textEHNumber"
+            android:id="@+id/textEHNumber1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="TextView"
             android:textColor="#333333"
             android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/acceptButton"
+            app:layout_constraintEnd_toStartOf="@+id/acceptButton1"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textRole" />
+            app:layout_constraintTop_toBottomOf="@+id/textRole1" />
 
         <TextView
-            android:id="@+id/textName"
+            android:id="@+id/textName1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="TextView"
             android:textColor="#000000"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/acceptButton"
+            app:layout_constraintEnd_toStartOf="@+id/acceptButton1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textRole"
+            android:id="@+id/textRole1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="TextView"
             android:textColor="#333333"
             android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/acceptButton"
+            app:layout_constraintEnd_toStartOf="@+id/acceptButton1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textName" />
+            app:layout_constraintTop_toBottomOf="@+id/textName1" />
 
         <Button
-            android:id="@+id/acceptButton"
+            android:id="@+id/acceptButton1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
             android:background="#1CC661"
             android:elevation="2dp"
             android:text="Accept"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/denyButton"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
-
-        <Button
-            android:id="@+id/denyButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#EC3333"
-            android:elevation="2dp"
-            android:text="Deny"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

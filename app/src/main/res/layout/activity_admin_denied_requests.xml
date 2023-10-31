@@ -25,14 +25,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-black"
-        android:text="Registration Requests"
+        android:text="Denied Requests"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/userList"
+        android:id="@+id/userDeniedList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="112dp"
@@ -51,16 +51,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/deniedRequestsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="305dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginRight="10dp"
-            android:text="Denied Requests" />
-
-        <Button
-            android:id="@+id/backRequestButton"
+            android:id="@+id/backDeniedRequestButton"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_margin="10dp"

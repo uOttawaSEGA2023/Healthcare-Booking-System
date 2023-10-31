@@ -6,22 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
+public class UserDeniedAdapter extends RecyclerView.Adapter<UserDeniedAdapter.UserDeniedHolder> {
     private Context context;
     private ArrayList<String> users; // List of user details
     private ArrayList<String> userIds; // List of user IDs
     private FirebaseFirestore firestore;
 
-    public UserAdapter(Context context, ArrayList<String> users, ArrayList<String> userIds) {
+    public UserDeniedAdapter(Context context, ArrayList<String> users, ArrayList<String> userIds) {
         this.context = context;
         this.users = users;
         this.userIds = userIds;
@@ -30,13 +30,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
 
     @NonNull
     @Override
-    public UserAdapter.UserHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.user_layout_item, parent, false);
-        return new UserHolder(view);
+    public UserDeniedAdapter.UserDeniedHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.activity_denied_layout_item, parent, false);
+        return new UserDeniedHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UserAdapter.UserHolder holder, int position) {
+    public void onBindViewHolder(@NonNull UserDeniedAdapter.UserDeniedHolder holder, int position) {
         String user = users.get(position);
         String userId = userIds.get(position); // Get the corresponding userId
         holder.setDetails(user, userId);
@@ -47,21 +47,20 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
         return users.size();
     }
 
-    class UserHolder extends RecyclerView.ViewHolder {
+    class UserDeniedHolder extends RecyclerView.ViewHolder {
         private TextView textName, textRole, textEHNumber, textEmail, textPhone, textSpec;
-        private Button acceptButton, denyButton;
+        private Button acceptButton;
 
-        UserHolder(@NonNull View itemView) {
+        UserDeniedHolder(@NonNull View itemView) {
             super(itemView);
-            textName = itemView.findViewById(R.id.textName);
-            textRole = itemView.findViewById(R.id.textRole);
-            textEHNumber = itemView.findViewById(R.id.textEHNumber);
-            textEmail = itemView.findViewById(R.id.textEmail);
-            textPhone = itemView.findViewById(R.id.textPhone);
-            textSpec = itemView.findViewById(R.id.textSpec);
+            textName = itemView.findViewById(R.id.textName1);
+            textRole = itemView.findViewById(R.id.textRole1);
+            textEHNumber = itemView.findViewById(R.id.textEHNumber1);
+            textEmail = itemView.findViewById(R.id.textEmail1);
+            textPhone = itemView.findViewById(R.id.textPhone1);
+            textSpec = itemView.findViewById(R.id.textSpec1);
 
-            acceptButton = itemView.findViewById(R.id.acceptButton);
-            denyButton = itemView.findViewById(R.id.denyButton);
+            acceptButton = itemView.findViewById(R.id.acceptButton1);
         }
 
         void setDetails(String user, String userId) {
@@ -79,16 +78,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
                 textSpec.setText("Specialties: " + parts[5]);
             }
 
-
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     moveUserToCollection(userId, "accepted users");
-                }
-            });
-
-            denyButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    moveUserToCollection(userId, "rejected users");
                 }
             });
         }
@@ -97,18 +89,19 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
     private void moveUserToCollection(String userId, String collectionName) {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
-        firestore.collection("pending users").document(userId).get()
+        firestore.collection("rejected users").document(userId).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     Map<String, Object> userData = documentSnapshot.getData();
                     if (userData != null) {
                         firestore.collection(collectionName).document(userId).set(userData)
                                 .addOnSuccessListener(aVoid ->
-                                        firestore.collection("pending users").document(userId).delete()
+                                        firestore.collection("rejected users").document(userId).delete()
                                 );
                     }
                 });
     }
 }
+
 
 
 

@@ -4,13 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import androidx.annotation.Nullable;
+import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.widget.Button;
-import android.view.View;
+
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,22 +19,22 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class AdminRegistrationRequests extends AppCompatActivity {
+public class AdminDeniedRequestsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ArrayList<String> userDetailsList;
     private ArrayList<String> userIds; // List to store user IDs
     private Button backButton;
-    private UserAdapter adapter;
+    private UserDeniedAdapter adapter;
     private FirebaseFirestore firestore;
 
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_registration_requests);
+        setContentView(R.layout.activity_admin_denied_requests);
 
-        recyclerView = findViewById(R.id.userList);
+        recyclerView = findViewById(R.id.userDeniedList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         userDetailsList = new ArrayList<>();
@@ -42,7 +42,7 @@ public class AdminRegistrationRequests extends AppCompatActivity {
 
         firestore = FirebaseFirestore.getInstance();
 
-        firestore.collection("pending users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firestore.collection("rejected users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
 
@@ -62,34 +62,35 @@ public class AdminRegistrationRequests extends AppCompatActivity {
                         String employeeNumber = snapshot.getString("employeeNumber");
                         String specialties = snapshot.getString("specialties");
 
-                        String details = " Role: " + role + " Email: " + email + " Phone: " + phone;
+                        String details = "";
                         if ("patient".equals(role)) {
-                            details += " Health Card: " + healthCardNumber;
+                            details = healthCardNumber;
                         } else if ("doctor".equals(role)) {
-                            details += " Employee No: " + employeeNumber;
-                            details +=" Specialties: " + specialties;
+                            details = employeeNumber;
+                            details += ", " + specialties;
                         }
 
-                        userDetailsList.add(fullName + " |" + details);
+                        userDetailsList.add(fullName + ", " + role + ", " + email + ", " + phone + ", " + details);
                         userIds.add(userId);
                     }
                 }
 
-                adapter = new UserAdapter(getApplicationContext(), userDetailsList, userIds);
+                adapter = new UserDeniedAdapter(getApplicationContext(), userDetailsList, userIds);
                 recyclerView.setAdapter(adapter);
                 recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
             }
         });
 
-        backButton = findViewById(R.id.backRequestButton);
+        backButton = findViewById(R.id.backDeniedRequestButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminRegistrationRequests.this, AdminWelcomeActivity.class);
+                Intent intent = new Intent(AdminDeniedRequestsActivity.this, AdminRegistrationRequestsActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
+
     }
 }
 
