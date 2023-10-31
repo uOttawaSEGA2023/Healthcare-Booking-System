@@ -44,11 +44,7 @@ public class AdminRegistrationRequests extends AppCompatActivity {
 
         firestore.collection("pending users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    // Handle the error
-                    return;
-                }
+            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
 
                 userDetailsList.clear();
                 userIds.clear();
