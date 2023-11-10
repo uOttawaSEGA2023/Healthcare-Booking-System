@@ -3,20 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#FFFFFF"
     android:layout_height="match_parent">
+
+
 
     <TextView
         android:id="@+id/headerTitle2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
         android:gravity="center"
-        android:padding="16dp"
         android:text="Healthcare Appointment Management System"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="#88acb4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,27 +26,22 @@
         android:id="@+id/welcomePatient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="184dp"
+        android:layout_marginTop="32dp"
         android:text="Welcome Admin!"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/headerTitle2" />
 
     <Button
         android:id="@+id/logOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/material_dynamic_neutral70"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_back_button"
         android:text="Log Out"
-        app:layout_constraintBottom_toTopOf="@+id/headerTitle2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -55,17 +52,22 @@
         app:layout_constraintHorizontal_bias="0.063"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.761"
+        app:layout_constraintVertical_bias="0.428"
         app:srcCompat="@drawable/logo_hams" />
+
 
     <Button
         android:id="@+id/registrationRequests"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="436dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="428dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/rounded_button"
         android:text="View Registration Requests"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerTitle2" />
+        app:layout_constraintTop_toBottomOf="@+id/welcomePatient" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

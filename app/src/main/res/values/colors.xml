@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="sky_blue">#87CEEB</color>
+    <color name="white">#FFFFFF</color>
+    <color name="sky_blue">#75acb4</color>
     <color name="medium_turquoise">#48D1CC</color>
+    <color name="colorPrimary">#17375E</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="grey">#D3D3D3</color>
+    <color name="accent">#4ECCA3</color>
+    <color name="background">#e1edf0</color>
 </resources>
