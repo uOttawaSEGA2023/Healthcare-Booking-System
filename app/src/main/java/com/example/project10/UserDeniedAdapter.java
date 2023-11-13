@@ -73,27 +73,40 @@ public class UserDeniedAdapter extends RecyclerView.Adapter<UserDeniedAdapter.Us
             if(parts.length == 5){
                 textEHNumber.setText("Health Card: " + parts[4]);
                 textSpec.setText("No specialties");
-            } else{
+            } else {
                 textEHNumber.setText("Employee #" + parts[4]);
                 textSpec.setText("Specialties: " + parts[5]);
             }
 
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    moveUserToCollection(userId, "accepted users");
+                    moveUserToCollection(userId);
                 }
             });
         }
     }
 
-    private void moveUserToCollection(String userId, String collectionName) {
+    private void moveUserToCollection(String userId) {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
         firestore.collection("rejected users").document(userId).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     Map<String, Object> userData = documentSnapshot.getData();
                     if (userData != null) {
-                        firestore.collection(collectionName).document(userId).set(userData)
+                        String role = (String) userData.get("role");
+                        String targetCollection;
+
+                        // Determine the target collection based on the role
+                        if ("doctor".equals(role)) {
+                            targetCollection = "accepted doctors";
+                        } else if ("patient".equals(role)) {
+                            targetCollection = "accepted patients";
+                        } else {
+                            targetCollection = "accepted users"; // or any other logic as per your requirement
+                        }
+
+                        // Move the user to the determined collection
+                        firestore.collection(targetCollection).document(userId).set(userData)
                                 .addOnSuccessListener(aVoid ->
                                         firestore.collection("rejected users").document(userId).delete()
                                 );
@@ -101,6 +114,7 @@ public class UserDeniedAdapter extends RecyclerView.Adapter<UserDeniedAdapter.Us
                 });
     }
 }
+
 
 
 

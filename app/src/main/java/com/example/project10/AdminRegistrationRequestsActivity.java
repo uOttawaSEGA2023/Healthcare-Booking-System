@@ -4,12 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -36,48 +36,54 @@ public class AdminRegistrationRequestsActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.userList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
 
         userDetailsList = new ArrayList<>();
         userIds = new ArrayList<>();
+
+        adapter = new UserAdapter(getApplicationContext(), userDetailsList, userIds);
+        recyclerView.setAdapter(adapter);
 
         firestore = FirebaseFirestore.getInstance();
 
         firestore.collection("pending users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-
-                userDetailsList.clear();
-                userIds.clear();
-                for (DocumentSnapshot snapshot : documentSnapshots) {
-                    if (snapshot.exists()) {
-                        String userId = snapshot.getId();
-                        String firstName = snapshot.getString("firstName");
-                        String lastName = snapshot.getString("lastName");
-                        String fullName = firstName + " " + lastName;
-
-                        String role = snapshot.getString("role");
-                        String phone = snapshot.getString("phone");
-                        String email = snapshot.getString("email");
-                        String healthCardNumber = snapshot.getString("healthCardNumber");
-                        String employeeNumber = snapshot.getString("employeeNumber");
-                        String specialties = snapshot.getString("specialties");
-
-                        String details = "";
-                        if ("patient".equals(role)) {
-                            details = healthCardNumber;
-                        } else if ("doctor".equals(role)) {
-                            details = employeeNumber;
-                            details += ", " + specialties;
-                        }
-
-                        userDetailsList.add(fullName + ", " + role + ", " + email + ", " + phone + ", " + details);
-                        userIds.add(userId);
-                    }
+                if (e != null) {
+                    Toast.makeText(AdminRegistrationRequestsActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    return;
                 }
 
-                adapter = new UserAdapter(getApplicationContext(), userDetailsList, userIds);
-                recyclerView.setAdapter(adapter);
-                recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
+                if (documentSnapshots != null) {
+                    userDetailsList.clear();
+                    userIds.clear();
+                    for (DocumentSnapshot snapshot : documentSnapshots) {
+                        if (snapshot.exists()) {
+                            // Extract user data from snapshot
+                            String userId = snapshot.getId();
+                            String firstName = snapshot.getString("firstName");
+                            String lastName = snapshot.getString("lastName");
+                            String fullName = firstName + " " + lastName;
+                            String role = snapshot.getString("role");
+                            String phone = snapshot.getString("phone");
+                            String email = snapshot.getString("email");
+                            String healthCardNumber = snapshot.getString("healthCardNumber");
+                            String employeeNumber = snapshot.getString("employeeNumber");
+                            String specialties = snapshot.getString("specialties");
+
+                            String details = "";
+                            if ("patient".equals(role)) {
+                                details = healthCardNumber;
+                            } else if ("doctor".equals(role)) {
+                                details = employeeNumber + ", " + specialties;
+                            }
+
+                            userDetailsList.add(fullName + ", " + role + ", " + email + ", " + phone + ", " + details);
+                            userIds.add(userId);
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 
@@ -102,4 +108,5 @@ public class AdminRegistrationRequestsActivity extends AppCompatActivity {
         });
     }
 }
+
 

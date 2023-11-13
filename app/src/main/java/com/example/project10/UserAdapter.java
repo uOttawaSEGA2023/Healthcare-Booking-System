@@ -79,29 +79,57 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
                 textSpec.setText("Specialties: " + parts[5]);
             }
 
-
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    moveUserToCollection(userId, "accepted users");
+                    moveUserToAcceptedCollection(userId);
                 }
             });
 
             denyButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    moveUserToCollection(userId, "rejected users");
+                    moveUserToRejectedCollection(userId);
                 }
             });
         }
     }
 
-    private void moveUserToCollection(String userId, String collectionName) {
+    private void moveUserToAcceptedCollection(String userId) {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
         firestore.collection("pending users").document(userId).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     Map<String, Object> userData = documentSnapshot.getData();
                     if (userData != null) {
-                        firestore.collection(collectionName).document(userId).set(userData)
+                        String role = (String) userData.get("role");
+                        String targetCollection;
+
+                        // Determine the target collection based on the role
+                        if ("doctor".equals(role)) {
+                            targetCollection = "accepted doctors";
+                        } else if ("patient".equals(role)) {
+                            targetCollection = "accepted patients";
+                        } else {
+                            targetCollection = "accepted users";
+                        }
+
+                        // Move the user to the determined collection
+                        firestore.collection(targetCollection).document(userId).set(userData)
+                                .addOnSuccessListener(aVoid ->
+                                        firestore.collection("pending users").document(userId).delete()
+                                );
+                    }
+                });
+    }
+
+    private void moveUserToRejectedCollection(String userId) {
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+        firestore.collection("pending users").document(userId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    Map<String, Object> userData = documentSnapshot.getData();
+                    if (userData != null) {
+                        // Move the user to the "rejected users" collection
+                        firestore.collection("rejected users").document(userId).set(userData)
                                 .addOnSuccessListener(aVoid ->
                                         firestore.collection("pending users").document(userId).delete()
                                 );
@@ -109,6 +137,5 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
                 });
     }
 }
-
 
 

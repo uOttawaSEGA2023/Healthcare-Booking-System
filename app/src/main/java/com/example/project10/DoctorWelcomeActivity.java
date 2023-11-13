@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnSuccessListener;
+import android.widget.Toast;
+
+
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -19,6 +21,7 @@ public class DoctorWelcomeActivity extends AppCompatActivity {
     private TextView doctorStatus;
     private FirebaseAuth mAuth;
     private FirebaseFirestore fstore;
+    private String userStatus = ""; // Global variable for user status
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,58 @@ public class DoctorWelcomeActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        Button btnUpcomingAppointments = findViewById(R.id.button_doctor_upcomingApp);
+        btnUpcomingAppointments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userStatus.equals("Accepted")) {
+                    Intent intent = new Intent(DoctorWelcomeActivity.this, DoctorUpcomingAppointmentsActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(DoctorWelcomeActivity.this, "This feature is only available for accepted users", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        Button btnPastAppointments = findViewById(R.id.button_doctor_pastApp);
+        btnPastAppointments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userStatus.equals("Accepted")) {
+                    Intent intent = new Intent(DoctorWelcomeActivity.this, DoctorPastAppointmentsActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(DoctorWelcomeActivity.this, "This feature is only available for accepted users", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        Button btnAppointmentRequests = findViewById(R.id.button_doctor_app_requests);
+        btnAppointmentRequests.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userStatus.equals("Accepted")) {
+                    Intent intent = new Intent(DoctorWelcomeActivity.this, DoctorAppointmentRequestsActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(DoctorWelcomeActivity.this, "This feature is only available for accepted users", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        Button btnCreateAppointment = findViewById(R.id.button_doctor_createApp);
+        btnCreateAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userStatus.equals("Accepted")) {
+                    Intent intent = new Intent(DoctorWelcomeActivity.this, DoctorCreateAppointmentActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(DoctorWelcomeActivity.this, "This feature is only available for accepted users", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void checkUserStatus() {
@@ -49,7 +104,7 @@ public class DoctorWelcomeActivity extends AppCompatActivity {
         if (currentUser != null) {
             String userId = currentUser.getUid();
             checkUserInCollection(userId, "pending users", "Pending");
-            checkUserInCollection(userId, "accepted users", "Accepted");
+            checkUserInCollection(userId, "accepted doctors", "Accepted");
             checkUserInCollection(userId, "rejected users", "Rejected");
         } else {
             doctorStatus.setText("Status: Not logged in");
@@ -60,9 +115,10 @@ public class DoctorWelcomeActivity extends AppCompatActivity {
         fstore.collection(collection).document(userId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
+                    userStatus = status; // Set the global userStatus variable
                     if(status.equals("Rejected")){
                         doctorStatus.setText("Status: " + status + "\nEmail admin@gmail.com");
-                    }else{
+                    } else {
                         doctorStatus.setText("Status: " + status);
                     }
                 }

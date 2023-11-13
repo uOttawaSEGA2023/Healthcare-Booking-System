@@ -31,6 +31,11 @@
         <activity android:name=".DoctorWelcomeActivity" />
         <activity android:name=".AdminRegistrationRequestsActivity" />
         <activity android:name=".AdminDeniedRequestsActivity" />
+        <activity android:name=".DoctorAppointmentRequestsActivity" />
+        <activity android:name=".DoctorCreateAppointmentActivity" />
+        <activity android:name=".DoctorPastAppointmentsActivity" />
+        <activity android:name=".DoctorUpcomingAppointmentsActivity" />
+
 
     </application>
 

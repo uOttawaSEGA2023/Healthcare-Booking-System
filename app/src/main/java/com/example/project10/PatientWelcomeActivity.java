@@ -47,7 +47,7 @@ public class PatientWelcomeActivity extends AppCompatActivity {
         if (currentUser != null) {
             String userId = currentUser.getUid();
             checkUserInCollection(userId, "pending users", "Pending");
-            checkUserInCollection(userId, "accepted users", "Accepted");
+            checkUserInCollection(userId, "accepted patients", "Accepted");
             checkUserInCollection(userId, "rejected users", "Rejected");
         } else {
             patientStatus.setText("Status: Not logged in");
