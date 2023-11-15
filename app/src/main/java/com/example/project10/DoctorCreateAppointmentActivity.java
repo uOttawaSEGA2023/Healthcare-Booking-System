@@ -218,16 +218,16 @@ public class DoctorCreateAppointmentActivity extends AppCompatActivity {
     }
 
     private void createNewAppointment(String startDate, String startTime, String endTime) {
-        Map<String, Object> appointment = new HashMap<>();
-        appointment.put("date", startDate);
-        appointment.put("startTime", startTime);
-        appointment.put("endTime", endTime);
-        appointment.put("Appointment Request", "none");
+        Map<String, Object> shift = new HashMap<>();
+        shift.put("date", startDate);
+        shift.put("startTime", startTime);
+        shift.put("endTime", endTime);
+        shift.put("Appointment Request", "none");
 
         String doctorId = mAuth.getCurrentUser().getUid();
 
         fstore.collection("accepted doctors").document(doctorId)
-                .collection("appointments").add(appointment)
+                .collection("upcoming shifts").add(shift)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -243,6 +243,16 @@ public class DoctorCreateAppointmentActivity extends AppCompatActivity {
                         Toast.makeText(DoctorCreateAppointmentActivity.this, "Error Creating Shift", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+        backButton = findViewById(R.id.doctorCreateAppBackButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Intent for navigating back or just finish the current activity
+                finish(); // This will close the current activity and return to the previous one
+            }
+        });
+        }
     }
-}
+
 

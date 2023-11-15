@@ -35,6 +35,9 @@
         <activity android:name=".DoctorCreateAppointmentActivity" />
         <activity android:name=".DoctorPastAppointmentsActivity" />
         <activity android:name=".DoctorUpcomingAppointmentsActivity" />
+        <activity android:name=".DoctorAppointmentRequestAdapter" />
+        <activity android:name=".Appointment" />
+
 
 
     </application>

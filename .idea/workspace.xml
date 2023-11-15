@@ -9,24 +9,16 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c40cb1f-d570-4f43-86f2-c69d1852c187" name="Changes" comment="made it look nicer">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project10/DoctorAppointmentRequestsActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project10/DoctorCreateAppointmentActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project10/DoctorPastAppointmentsActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project10/DoctorUpcomingAppointmentsActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_appointments_requests.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_create_appointment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_past_appointments.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_upcoming_appointments.xml" afterDir="false" />
+    <list default="true" id="6c40cb1f-d570-4f43-86f2-c69d1852c187" name="Changes" comment="Added new buttons and pages for the doctor features. Doctor can now create shifts and save it in the database. Shifts can only be made in 30 minute increments (auto rounded) and cannot be double booked.">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project10/Appointment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project10/DoctorAppointmentRequestAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_appointment_requests.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/appointment_requests_layout_item.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/project10/AdminRegistrationRequestsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project10/AdminRegistrationRequestsActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/project10/DoctorWelcomeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project10/DoctorWelcomeActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/project10/PatientWelcomeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project10/PatientWelcomeActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/project10/UserAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project10/UserAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/project10/UserDeniedAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project10/UserDeniedAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_welcome_screen.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_welcome_screen.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_patient_welcome_screen.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_patient_welcome_screen.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/project10/DoctorAppointmentRequestsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project10/DoctorAppointmentRequestsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/project10/DoctorCreateAppointmentActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project10/DoctorCreateAppointmentActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_appointments_requests.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,7 +228,14 @@
       <option name="project" value="LOCAL" />
       <updated>1699624838150</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added new buttons and pages for the doctor features. Doctor can now create shifts and save it in the database. Shifts can only be made in 30 minute increments (auto rounded) and cannot be double booked.">
+      <created>1699883075914</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1699883075914</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -265,6 +264,7 @@
     <MESSAGE value="added admin requests xml" />
     <MESSAGE value="accept and reject buttons are now functional. Requests to admin now display user info" />
     <MESSAGE value="made it look nicer" />
-    <option name="LAST_COMMIT_MESSAGE" value="made it look nicer" />
+    <MESSAGE value="Added new buttons and pages for the doctor features. Doctor can now create shifts and save it in the database. Shifts can only be made in 30 minute increments (auto rounded) and cannot be double booked." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added new buttons and pages for the doctor features. Doctor can now create shifts and save it in the database. Shifts can only be made in 30 minute increments (auto rounded) and cannot be double booked." />
   </component>
 </project>
