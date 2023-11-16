@@ -62,19 +62,15 @@
 
     <!-- Back Button -->
     <Button
-        android:id="@+id/backRequestButton"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:id="@+id/doctorCreateAppBackButton"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/rounded_back_button"
         android:text="Back"
-        android:textColor="#36454F"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/doctorLogOut"
-        app:layout_constraintHorizontal_bias="0.118"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_conversion_absoluteHeight="48dp"
-        tools:layout_conversion_absoluteWidth="80dp"
-        tools:layout_editor_absoluteY="16dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

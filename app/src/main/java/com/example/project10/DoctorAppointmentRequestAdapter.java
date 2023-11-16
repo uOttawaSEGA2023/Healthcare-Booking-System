@@ -7,8 +7,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class DoctorAppointmentRequestAdapter extends RecyclerView.Adapter<DoctorAppointmentRequestAdapter.AppointmentViewHolder> {
 
@@ -76,6 +80,6 @@ public class DoctorAppointmentRequestAdapter extends RecyclerView.Adapter<Doctor
             appStartTimeTextView.setText(appointment.getAppStartTime());
             appEndTimeTextView.setText(appointment.getAppEndTime());
             patientIDTextView.setText(appointment.getPatientID());
-        }
-    }
+        }}
 }
+

@@ -43,7 +43,7 @@ public class DoctorUpcomingAppointmentsActivity extends AppCompatActivity {
 
 
         logOutButton = findViewById(R.id.doctorLogOut);
-        backButton = findViewById(R.id.backRequestButton);
+        backButton = findViewById(R.id.doctorCreateAppBackButton);
 
         mAuth = FirebaseAuth.getInstance();
         fstore = FirebaseFirestore.getInstance();
@@ -55,7 +55,6 @@ public class DoctorUpcomingAppointmentsActivity extends AppCompatActivity {
                 mAuth.signOut();
                 Intent mainIntent = new Intent(DoctorUpcomingAppointmentsActivity.this, MainActivity.class);
                 startActivity(mainIntent);
-                finish();
             }
         });
 
@@ -64,7 +63,6 @@ public class DoctorUpcomingAppointmentsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent mainIntent = new Intent(DoctorUpcomingAppointmentsActivity.this, DoctorWelcomeActivity.class);
                 startActivity(mainIntent);
-                finish();
             }
         });
     }
