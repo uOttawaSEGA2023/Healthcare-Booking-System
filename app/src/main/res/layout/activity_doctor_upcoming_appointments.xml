@@ -26,7 +26,7 @@
         android:id="@+id/doctorStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Status: Unknown"
+        android:text="Status: Accepted"
         app:layout_constraintTop_toBottomOf="@id/welcomeDoctor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,16 +60,21 @@
         app:layout_constraintVertical_bias="1.0" />
 
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        app:layout_constraintBottom_toTopOf="@+id/headerTitle2"
+    <!-- Back Button -->
+    <Button
+        android:id="@+id/backRequestButton"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:background="@drawable/rounded_back_button"
+        android:text="Back"
+        android:textColor="#36454F"
+        android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/doctorLogOut"
-        app:layout_constraintHorizontal_bias="0.063"
+        app:layout_constraintHorizontal_bias="0.118"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.761"
-        app:srcCompat="@drawable/logo_hams" />
+        tools:layout_conversion_absoluteHeight="48dp"
+        tools:layout_conversion_absoluteWidth="80dp"
+        tools:layout_editor_absoluteY="16dp"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
