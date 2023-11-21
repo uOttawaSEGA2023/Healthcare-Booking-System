@@ -1,69 +1,82 @@
 package com.example.project10;
 
-import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import android.widget.TimePicker;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Date;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import java.util.ArrayList;
+import java.util.List;
+
 public class DoctorUpcomingAppointmentsActivity extends AppCompatActivity {
 
-    private Button logOutButton, backButton;
+    private RecyclerView recyclerView;
+    private DoctorAppointmentViewAdapter adapter;
+    private Button backButton;
 
+    private FirebaseFirestore db;
     private FirebaseAuth mAuth;
-    private FirebaseFirestore fstore;
 
-    @SuppressLint("MissingInflatedId")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_doctor_upcoming_appointments);
 
+        recyclerView = findViewById(R.id.userList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new DoctorAppointmentViewAdapter();
+        recyclerView.setAdapter(adapter);
 
-        logOutButton = findViewById(R.id.doctorLogOut);
-        backButton = findViewById(R.id.doctorCreateAppBackButton);
+        db = FirebaseFirestore.getInstance();
+        loadUpcomingAppointments();
 
-        mAuth = FirebaseAuth.getInstance();
-        fstore = FirebaseFirestore.getInstance();
-
-
-        logOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                Intent mainIntent = new Intent(DoctorUpcomingAppointmentsActivity.this, MainActivity.class);
-                startActivity(mainIntent);
-            }
-        });
-
+        backButton = findViewById(R.id.backRequestButton);
         backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View v) {
-                Intent mainIntent = new Intent(DoctorUpcomingAppointmentsActivity.this, DoctorWelcomeActivity.class);
-                startActivity(mainIntent);
+                Intent intent = new Intent(DoctorUpcomingAppointmentsActivity.this, DoctorWelcomeActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
+
+
+    }
+
+    private void loadUpcomingAppointments() {
+        String currentUserId = getCurrentUserId();
+        db.collection("accepted doctors")
+                .document(currentUserId)
+                .collection("upcoming appointments")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<Appointment> appointments = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Appointment appointment = document.toObject(Appointment.class);
+                            appointment.setDocumentId(document.getId());
+                            appointments.add(appointment);
+                        }
+                        adapter.setAppointments(appointments);
+                    } else {
+                        Toast.makeText(this, "Error loading appointments", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+
+
+    private String getCurrentUserId() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        return currentUser != null ? currentUser.getUid() : "";
     }
 }

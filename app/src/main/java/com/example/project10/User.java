@@ -4,17 +4,19 @@ package com.example.project10;
 public abstract class User {
     private String firstName;
     private String lastName;
-    private String emailAddress;
+    private String email ;
     private String password;
-    private String phoneNumber;
+    private String phone;
     private String address;
 
-    public User(String firstName, String lastName, String emailAddress, String password, String phoneNumber, String address) {
+    public User() {
+    }
+    public User(String firstName, String lastName, String email, String password, String phone, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.emailAddress = emailAddress;
+        this.email = email;
         this.password = password;
-        this.phoneNumber = phoneNumber;
+        this.phone = phone;
         this.address = address;
     }
 
@@ -35,12 +37,12 @@ public abstract class User {
         this.lastName = lastName;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setEmail(String emailAddress) {
+        this.email = emailAddress;
     }
 
     public String getPassword() {
@@ -51,12 +53,12 @@ public abstract class User {
         this.password = password;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.phone = phone;
     }
 
     public String getAddress() {

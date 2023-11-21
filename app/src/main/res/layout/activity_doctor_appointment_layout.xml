@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <!-- Appointment Date TextView -->
+
+        <!-- Start Time TextView -->
+        <TextView
+            android:id="@+id/tvAppDate"
+            android:layout_width="200dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="4dp"
+            android:text="Shift Date"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- End Time TextView -->
+
+        <TextView
+            android:id="@+id/tvAppStartTime"
+            android:layout_width="200dp"
+            android:layout_height="16dp"
+            android:text="Start Time"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.015"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAppDate" />
+
+        <!-- Patient Email TextView -->
+
+        <!-- Patient Phone Number TextView -->
+        <TextView
+            android:id="@+id/tvPatientEmail"
+            android:layout_width="200dp"
+            android:layout_height="16dp"
+            android:text="Patient Email"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPatientName" />
+
+        <TextView
+            android:id="@+id/tvAppEndTime"
+            android:layout_width="200dp"
+            android:layout_height="16dp"
+            android:text="End Time"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAppStartTime" />
+
+        <TextView
+            android:id="@+id/tvPatientName"
+            android:layout_width="200dp"
+            android:layout_height="16dp"
+            android:text="Patient Name"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAppEndTime" />
+
+        <TextView
+            android:id="@+id/tvPatientHealthCardNumber"
+            android:layout_width="200dp"
+            android:layout_height="16dp"
+            android:text="Patient Health Card Number"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPatientPhoneNumber" />
+
+        <TextView
+            android:id="@+id/tvPatientPhoneNumber"
+            android:layout_width="200dp"
+            android:layout_height="16dp"
+            android:text="Patient Phone Number"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPatientEmail" />
+
+        <Button
+            android:id="@+id/cancelButtonAppointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:background="#EC3333"
+            android:elevation="2dp"
+            android:text="Cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/tvPatientName"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
+

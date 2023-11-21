@@ -10,10 +10,8 @@ public class Appointment {
     private String id;
     private String documentId;
 
-    // Make sure to have an empty constructor for Firestore's automatic data mapping
     public Appointment() {}
 
-    // Getters and setters for each field
     public String getAppDate() {
         return appDate;
     }

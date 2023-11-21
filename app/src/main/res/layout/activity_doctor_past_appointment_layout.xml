@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <!-- Appointment Date TextView -->
+        <TextView
+            android:id="@+id/tvAppDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Shift Date"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Start Time TextView -->
+        <TextView
+            android:id="@+id/tvAppStartTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Start Time"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAppDate" />
+
+        <!-- End Time TextView -->
+        <TextView
+            android:id="@+id/tvAppEndTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="End Time"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAppStartTime" />
+        <TextView
+            android:id="@+id/tvPatientName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Patient Name"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAppEndTime" />
+
+        <!-- Patient Email TextView -->
+        <TextView
+            android:id="@+id/tvPatientEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Patient Email"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@+id/tvPatientName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Patient Phone Number TextView -->
+        <TextView
+            android:id="@+id/tvPatientPhoneNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Patient Phone Number"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@+id/tvPatientEmail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Patient Health Card Number TextView -->
+        <TextView
+            android:id="@+id/tvPatientHealthCardNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Patient Health Card Number"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@+id/tvPatientPhoneNumber"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

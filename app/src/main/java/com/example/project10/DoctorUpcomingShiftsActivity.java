@@ -16,10 +16,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DoctorPastAppointmentsActivity extends AppCompatActivity {
+public class DoctorUpcomingShiftsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private DoctorPastAppointmentViewAdapter adapter;
+    private DoctorShiftViewAdapter adapter;
     private Button backButton;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -28,39 +28,41 @@ public class DoctorPastAppointmentsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
-        setContentView(R.layout.activity_doctor_past_appointments);
+        setContentView(R.layout.activity_doctor_upcoming_shifts);
 
         recyclerView = findViewById(R.id.userList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new DoctorPastAppointmentViewAdapter();
+        adapter = new DoctorShiftViewAdapter();
         recyclerView.setAdapter(adapter);
 
         db = FirebaseFirestore.getInstance();
-        loadPastAppointments(); // Renamed method
+        loadUpcomingAppointments();
 
         backButton = findViewById(R.id.backRequestButton);
-        backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(DoctorPastAppointmentsActivity.this, DoctorWelcomeActivity.class);
-            startActivity(intent);
-            finish();
+        backButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(DoctorUpcomingShiftsActivity.this, DoctorWelcomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
         });
     }
 
-    private void loadPastAppointments() { // Renamed and updated method
+    private void loadUpcomingAppointments() {
         String currentUserId = getCurrentUserId();
         db.collection("accepted doctors")
                 .document(currentUserId)
-                .collection("past appointments")
+                .collection("upcoming shifts")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        List<Appointment> appointments = new ArrayList<>();
+                        List<Shift> shifts = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            Appointment appointment = document.toObject(Appointment.class);
-                            appointment.setDocumentId(document.getId());
-                            appointments.add(appointment);
+                            Shift shift = document.toObject(Shift.class);
+                            shift.setDocumentId(document.getId());
+                            shifts.add(shift);
                         }
-                        adapter.setAppointments(appointments);
+                        adapter.setShifts(shifts);
                     } else {
                         Toast.makeText(this, "Error loading appointments", Toast.LENGTH_SHORT).show();
                     }
@@ -72,4 +74,3 @@ public class DoctorPastAppointmentsActivity extends AppCompatActivity {
         return currentUser != null ? currentUser.getUid() : "";
     }
 }
-

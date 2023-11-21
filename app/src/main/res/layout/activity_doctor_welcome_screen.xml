@@ -76,9 +76,21 @@
         android:id="@+id/button_doctor_upcomingApp"
         android:layout_width="210dp"
         android:layout_height="55dp"
-        android:layout_marginTop="184dp"
-        android:text="Upcoming Appointments"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rounded_button"
+        android:text="Upcoming Appointments"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_doctor_upcomingShifts" />
+
+    <Button
+        android:id="@+id/button_doctor_upcomingShifts"
+        android:layout_width="210dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="128dp"
+        android:background="@drawable/rounded_button"
+        android:text="Upcoming Shifts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -119,4 +131,16 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_doctor_app_requests" />
+
+    <CheckBox
+        android:id="@+id/autoAcceptCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="Auto Accept Appointments"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_doctor_createApp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

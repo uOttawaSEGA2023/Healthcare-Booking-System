@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-black"
-        android:text="Upcoming Appointments"
+        android:text="Upcoming Shifts"
         android:textSize="20sp"
         android:textColor="#36454F"
         app:layout_constraintEnd_toEndOf="parent"
