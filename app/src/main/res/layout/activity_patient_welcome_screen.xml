@@ -6,6 +6,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/patientPastAppointmentButton"
+        android:layout_width="210dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_button"
+        android:text="Past Appointments"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/patientUpcomingAppointmentButton" />
+
+    <Button
+        android:id="@+id/patientUpcomingAppointmentButton"
+        android:layout_width="210dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_button"
+        android:text="Upcoming Appointments"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/patientRequestAppointmentButton" />
+
     <TextView
         android:id="@+id/headerTitle2"
         android:layout_width="wrap_content"
@@ -71,10 +95,10 @@
         app:srcCompat="@drawable/logo_hams" />
 
     <Button
-        android:id="@+id/patient_Registration_Button"
+        android:id="@+id/patientRequestAppointmentButton"
         android:layout_width="210dp"
         android:layout_height="55dp"
-        android:layout_marginTop="240dp"
+        android:layout_marginTop="196dp"
         android:background="@drawable/rounded_button"
         android:text="Request Appointment"
         app:layout_constraintEnd_toEndOf="parent"

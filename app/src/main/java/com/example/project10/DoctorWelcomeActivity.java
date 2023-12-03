@@ -37,7 +37,7 @@ public class DoctorWelcomeActivity extends AppCompatActivity {
     private TextView doctorStatus;
     private FirebaseAuth mAuth;
     private FirebaseFirestore fstore;
-    private String userStatus = ""; // Global variable for user status
+    private String userStatus = "";
 
     private CheckBox autoAcceptCheckbox;
 
@@ -62,7 +62,7 @@ public class DoctorWelcomeActivity extends AppCompatActivity {
         checkUserStatus();
 
         checkAndMovePastAppointments();
-
+        checkAndDeletePastShifts();
 
         autoAcceptCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -162,10 +162,8 @@ public class DoctorWelcomeActivity extends AppCompatActivity {
 
 
     private void checkAndMovePastAppointments() {
-        // Get current date and time
         Calendar now = Calendar.getInstance();
 
-        // Format for date and time
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
@@ -190,7 +188,6 @@ public class DoctorWelcomeActivity extends AppCompatActivity {
     private void moveAllAppointmentsToUpcoming() {
         String currentUserId = getCurrentUserId();
 
-        // Fetch all appointment requests
         db.collection("accepted doctors")
                 .document(getCurrentUserId())
                 .collection("appointment requests") // Assuming this is your collection name
@@ -201,14 +198,12 @@ public class DoctorWelcomeActivity extends AppCompatActivity {
                             Appointment appointment = document.toObject(Appointment.class);
                             String documentId = document.getId(); // Get the document ID
 
-                            // Move each appointment to the upcoming appointments
                             db.collection("accepted doctors")
                                     .document(currentUserId)
                                     .collection("upcoming appointments")
                                     .document(documentId)  // Use the existing document ID
                                     .set(appointment)      // Set the appointment data
                                     .addOnSuccessListener(documentReference -> {
-                                        // Optionally delete the appointment from requests
                                         deleteAppointmentFromRequests(documentId);
                                     })
                                     .addOnFailureListener(e -> {
@@ -236,8 +231,8 @@ public class DoctorWelcomeActivity extends AppCompatActivity {
         db.collection("accepted doctors")
                 .document(currentUserId)
                 .collection("past appointments")
-                .document(documentId)  // Use the existing document ID
-                .set(appointment)      // Set the appointment data in the past appointments collection
+                .document(documentId)
+                .set(appointment)
                 .addOnSuccessListener(documentReference -> {
                     deleteAppointmentFromUpcoming(documentId);
                 })
@@ -259,6 +254,17 @@ public class DoctorWelcomeActivity extends AppCompatActivity {
                 });
     }
 
+    private void deleteShiftFromUpcoming(String documentId) {
+        db.collection("accepted doctors")
+                .document(getCurrentUserId())
+                .collection("upcoming shifts")
+                .document(documentId)
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                })
+                .addOnFailureListener(e -> {
+                });
+    }
     private boolean isPastAppointment(Appointment appointment, Calendar now, SimpleDateFormat dateFormat, SimpleDateFormat timeFormat) {
         try {
             Date appointmentDate = dateFormat.parse(appointment.getAppDate());
@@ -281,6 +287,51 @@ public class DoctorWelcomeActivity extends AppCompatActivity {
     }
 
 
+    private void checkAndDeletePastShifts() {
+        Calendar now = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
+        db.collection("accepted doctors")
+                .document(getCurrentUserId())
+                .collection("upcoming shifts")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Shift shift = document.toObject(Shift.class);
+                            String documentId = document.getId();
+                            if (isPastShift(shift, now, dateFormat, timeFormat)) {
+                                deleteShiftFromUpcoming(documentId);
+                            }
+                        }
+                    }
+                });
+    }
+
+    private boolean isPastShift(Shift shift, Calendar now, SimpleDateFormat dateFormat, SimpleDateFormat timeFormat) {
+        try {
+            Date shiftDate = dateFormat.parse(shift.getDate());
+            Date shiftStartTime = timeFormat.parse(shift.getStartTime());
+            Date shiftEndTime = timeFormat.parse(shift.getEndTime());
+
+            Calendar shiftDateTimeStart = Calendar.getInstance();
+            Calendar shiftDateTimeEnd = Calendar.getInstance();
+            if (shiftDate != null && shiftStartTime != null && shiftEndTime != null) {
+                shiftDateTimeStart.setTime(shiftDate);
+                shiftDateTimeStart.set(Calendar.HOUR_OF_DAY, shiftStartTime.getHours());
+                shiftDateTimeStart.set(Calendar.MINUTE, shiftStartTime.getMinutes());
+                shiftDateTimeEnd.setTime(shiftDate);
+                shiftDateTimeEnd.set(Calendar.HOUR_OF_DAY, shiftEndTime.getHours());
+                shiftDateTimeEnd.set(Calendar.MINUTE, shiftEndTime.getMinutes());
+            }
+
+            return shiftDateTimeEnd.before(now);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     private String getCurrentUserId() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         return currentUser != null ? currentUser.getUid() : "";
@@ -292,7 +343,7 @@ public class DoctorWelcomeActivity extends AppCompatActivity {
         fstore.collection(collection).document(userId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
-                    userStatus = status; // Set the global userStatus variable
+                    userStatus = status;
                     if(status.equals("Rejected")){
                         doctorStatus.setText("Status: " + status + "\nEmail admin@gmail.com");
                     } else {

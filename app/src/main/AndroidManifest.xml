@@ -41,7 +41,14 @@
         <activity android:name=".DoctorShiftViewAdapter" />
         <activity android:name=".Appointment" />
         <activity android:name=".Shift" />
-
+        <activity android:name=".PatientRequestAppointment" />
+        <activity android:name=".PatientUpcomingAppointments" />
+        <activity android:name=".PatientPastAppointments" />
+        <activity android:name=".PatientAppointmentSearchAdapter"/>
+        <activity android:name=".PatientRequestAppointmentWithSpecificDoctor"/>
+        <activity android:name=".PatientRequestAppointmentWithSpecificDoctorAdapter"/>
+        <activity android:name=".PatientPastAppointmentsAdapter" />
+        <activity android:name=".PatientUpcomingAppointmentsAdapter" />
 
 
 

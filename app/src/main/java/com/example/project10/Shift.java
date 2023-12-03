@@ -1,6 +1,11 @@
 
 package com.example.project10;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class Shift {
     private String date;
@@ -33,6 +38,9 @@ public class Shift {
         this.startTime = startTime;
     }
 
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
 
 
     public String getId() {
@@ -51,4 +59,31 @@ public class Shift {
     public void setDocumentId(String documentId) {
         this.documentId = documentId;
     }
+    public List<Shift> splitInto30MinIntervals() {
+        List<Shift> intervals = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
+        try {
+            Date start = sdf.parse(this.getStartTime());
+            Date end = sdf.parse(this.getEndTime());
+            Calendar calendar = Calendar.getInstance();
+
+            calendar.setTime(start);
+            while (calendar.getTime().before(end)) {
+                Shift interval = new Shift(); // Assuming you have a constructor to set date, startTime, endTime
+                interval.setDate(this.getDate());
+                interval.setStartTime(sdf.format(calendar.getTime()));
+
+                calendar.add(Calendar.MINUTE, 30);
+                interval.setEndTime(sdf.format(calendar.getTime()));
+
+                intervals.add(interval);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return intervals;
+    }
+
 }

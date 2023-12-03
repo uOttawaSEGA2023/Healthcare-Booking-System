@@ -9,17 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class DoctorAppointmentRequestAdapter extends RecyclerView.Adapter<DoctorAppointmentRequestAdapter.AppointmentViewHolder> {
 
     private List<Appointment> appointments;
     private OnAppointmentActionListener listener;
+    private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
-    // Constructor with listener
     public DoctorAppointmentRequestAdapter(OnAppointmentActionListener listener) {
         this.appointments = new ArrayList<>();
         this.listener = listener;
@@ -48,7 +48,6 @@ public class DoctorAppointmentRequestAdapter extends RecyclerView.Adapter<Doctor
         notifyDataSetChanged();
     }
 
-    // Interface for handling button actions
     interface OnAppointmentActionListener {
         void onAccept(Appointment appointment);
         void onDeny(Appointment appointment);
@@ -58,7 +57,10 @@ public class DoctorAppointmentRequestAdapter extends RecyclerView.Adapter<Doctor
         private final TextView appDateTextView;
         private final TextView appStartTimeTextView;
         private final TextView appEndTimeTextView;
-        private final TextView patientIDTextView;
+        private final TextView patientNameTextView;
+        private final TextView patientEmailTextView;
+        private final TextView patientPhoneNumberTextView;
+        private final TextView patientHealthCardNumberTextView;
         private final Button acceptButton;
         private final Button denyButton;
 
@@ -67,7 +69,10 @@ public class DoctorAppointmentRequestAdapter extends RecyclerView.Adapter<Doctor
             appDateTextView = itemView.findViewById(R.id.tvAppDate);
             appStartTimeTextView = itemView.findViewById(R.id.tvAppStartTime);
             appEndTimeTextView = itemView.findViewById(R.id.tvAppEndTime);
-            patientIDTextView = itemView.findViewById(R.id.tvPatientID);
+            patientNameTextView = itemView.findViewById(R.id.tvPatientName);
+            patientEmailTextView = itemView.findViewById(R.id.tvPatientEmail);
+            patientPhoneNumberTextView = itemView.findViewById(R.id.tvPatientPhoneNumber);
+            patientHealthCardNumberTextView = itemView.findViewById(R.id.tvPatientHealthCardNumber);
             acceptButton = itemView.findViewById(R.id.acceptButton);
             denyButton = itemView.findViewById(R.id.denyButton);
 
@@ -79,7 +84,22 @@ public class DoctorAppointmentRequestAdapter extends RecyclerView.Adapter<Doctor
             appDateTextView.setText(appointment.getAppDate());
             appStartTimeTextView.setText(appointment.getAppStartTime());
             appEndTimeTextView.setText(appointment.getAppEndTime());
-            patientIDTextView.setText(appointment.getPatientID());
-        }}
-}
 
+            String patientID = appointment.getPatientID();
+            firestore.collection("accepted patients")
+                    .document(patientID)
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            Patient patient = documentSnapshot.toObject(Patient.class);
+                            patientNameTextView.setText(patient.getFirstName() + " " + patient.getLastName());
+                            patientEmailTextView.setText(patient.getEmail());
+                            patientPhoneNumberTextView.setText(patient.getPhone());
+                            patientHealthCardNumberTextView.setText(patient.getHealthCardNumber());
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                    });
+        }
+    }
+}
