@@ -14,52 +14,98 @@
         android:padding="16dp">
 
         <!-- Appointment Date TextView -->
-        <TextView
-            android:id="@+id/tvAppDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Appointment Date"
-            android:textColor="#333333"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Start Time TextView -->
         <TextView
+            android:id="@+id/tvAppDate"
+            android:layout_width="200dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="4dp"
+            android:text="Shift Date"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- End Time TextView -->
+
+        <TextView
             android:id="@+id/tvAppStartTime"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="16dp"
             android:text="Start Time"
             android:textColor="#333333"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.015"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvAppDate" />
 
-        <!-- End Time TextView -->
+        <!-- Patient Email TextView -->
+
+        <!-- Patient Phone Number TextView -->
+        <TextView
+            android:id="@+id/tvPatientEmail"
+            android:layout_width="200dp"
+            android:layout_height="16dp"
+            android:text="Patient Email"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPatientName" />
+
         <TextView
             android:id="@+id/tvAppEndTime"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="16dp"
             android:text="End Time"
             android:textColor="#333333"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.01"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvAppStartTime" />
 
-        <!-- Patient ID TextView -->
         <TextView
-            android:id="@+id/tvPatientID"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Patient ID"
+            android:id="@+id/tvPatientName"
+            android:layout_width="200dp"
+            android:layout_height="16dp"
+            android:text="Patient Name"
             android:textColor="#333333"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.01"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvAppEndTime" />
+
+        <TextView
+            android:id="@+id/tvPatientHealthCardNumber"
+            android:layout_width="200dp"
+            android:layout_height="16dp"
+            android:text="Patient Health Card Number"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPatientPhoneNumber" />
+
+        <TextView
+            android:id="@+id/tvPatientPhoneNumber"
+            android:layout_width="200dp"
+            android:layout_height="16dp"
+            android:text="Patient Phone Number"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPatientEmail" />
+
         <Button
             android:id="@+id/acceptButton"
             android:layout_width="wrap_content"

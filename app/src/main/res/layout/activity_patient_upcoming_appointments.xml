@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-black"
-        android:text="Appointment Requests"
+        android:text="Upcoming Appointments"
         android:textSize="20sp"
         android:textColor="#36454F"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,10 +54,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <!-- Back Button -->
         <Button
-            android:id="@+id/backRequestButton"
+            android:id="@+id/backPatientUpcomingAppButton"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginLeft="28dp"

@@ -6,7 +6,7 @@ public class Appointment {
     private String appEndTime;
     private String appStartTime;
     private String patientID;
-
+    private String doctorName;
     private String id;
     private String documentId;
 
@@ -59,6 +59,14 @@ public class Appointment {
 
     public void setDocumentId(String documentId) {
         this.documentId = documentId;
+    }
+
+    public String getDoctorName() {
+        return doctorName; // Getter for the doctor's name
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName; // Setter for the doctor's name
     }
 }
 

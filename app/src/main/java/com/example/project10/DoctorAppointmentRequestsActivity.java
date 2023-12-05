@@ -39,8 +39,7 @@ public class DoctorAppointmentRequestsActivity extends AppCompatActivity impleme
         backButton = findViewById(R.id.backRequestButton);
         backButton.setOnClickListener(v -> finish());
 
-        deniedRequestsButton = findViewById(R.id.deniedRequestsButton);
-        deniedRequestsButton.setOnClickListener(v -> finish()); // Update this if it should have a different behavior
+
     }
 
     private void loadAppointmentRequests() {
@@ -87,7 +86,7 @@ public class DoctorAppointmentRequestsActivity extends AppCompatActivity impleme
                 .add(appointment)
                 .addOnSuccessListener(documentReference -> {
                     deleteAppointmentRequest(appointment);
-                    loadAppointmentRequests(); // Refresh list after accepting
+                    loadAppointmentRequests();
                 })
                 .addOnFailureListener(e -> Toast.makeText(this, "Failed to move appointment", Toast.LENGTH_SHORT).show());
     }
@@ -102,7 +101,6 @@ public class DoctorAppointmentRequestsActivity extends AppCompatActivity impleme
                     .document(appointmentId)
                     .delete()
                     .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(this, "Appointment deleted", Toast.LENGTH_SHORT).show();
                         loadAppointmentRequests(); // Refresh list after deleting
                     })
                     .addOnFailureListener(e -> Toast.makeText(this, "Error deleting appointment", Toast.LENGTH_SHORT).show());
