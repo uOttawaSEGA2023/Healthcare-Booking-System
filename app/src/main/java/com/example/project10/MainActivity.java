@@ -22,9 +22,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText emailEditText;
-    private EditText passwordEditText;
-    private Button signInButton;
+    protected EditText emailEditText;
+    protected EditText passwordEditText;
+    protected Button signInButton;
     private Button registerButton;
     FirebaseAuth mAuth;
     FirebaseFirestore fstore;
